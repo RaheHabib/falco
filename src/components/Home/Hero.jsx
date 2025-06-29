@@ -1,32 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StreamingText from '@utils/StreamingText';
-
-// Navigation component
-const Navigation = () => {
-  return (
-    <nav className="absolute top-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-between h-16 md:h-20">
-        <div className="flex-shrink-0">
-          <div className="text-xl font-bold text-gray-900">Logo</div>
-        </div>
-        
-        <div className="hidden md:block">
-          <div className="flex items-center space-x-8">
-            <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors font-medium">Home</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors font-medium">Services</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors font-medium">About Us</a>
-            <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors font-medium">Contact Us</a>
-          </div>
-        </div>
-        
-        <button className="bg-black text-white px-6 py-2 rounded-none hover:bg-gray-800 transition-colors font-medium">
-          <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-          Hire Us, Now
-        </button>
-      </div>
-    </nav>
-  );
-};
+import Navigation from '@utils/Navigation';
 
 // Client logos component
 const ClientLogos = () => {
@@ -131,21 +105,12 @@ const Hero = () => {
                   centric digital experiences.
                 </p>
               </div>
-              
-              {/* CTA Button */}
-              <div className="pt-4 sm:pt-6">
-                <button className="inline-flex items-center px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                  Get Started
-                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </button>
-              </div>
+
             </div>
             
             {/* Right Content - Dark Shape */}
-            <div className="absolute -right-20 top-1/2 -translate-y-1/2 z-10 overflow-visible">
-              <div
+            <div className="hidden lg:block absolute -right-20 top-1/2 -translate-y-1/2 z-0 overflow-visible">
+            <div
                 className="bg-[#191A2E]"
                 style={{
                   width: '500px',
