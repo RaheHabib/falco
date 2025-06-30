@@ -55,16 +55,16 @@ const Navigation = () => {
 
           {/* Mobile CTA Button - Right */}
           <div className="sm:hidden">
-            <button className="bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-colors font-medium text-xs">
-              <span className="inline-block w-1.5 h-1.5 bg-red-500 rounded-full mr-1.5"></span>
+            <button className="bg-black text-white px-3 py-1.5 hover:bg-gray-800 transition-colors font-medium text-xs">
+              <span className="inline-block w-1.5 h-1.5 bg-red-500 mr-1.5"></span>
               Hire Us
             </button>
           </div>
           
           {/* Tablet CTA Button - Right */}
           <div className="hidden sm:flex md:hidden">
-            <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm">
-              <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+            <button className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
+              <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
               Hire Us, Now
             </button>
           </div>
@@ -96,8 +96,8 @@ const Navigation = () => {
 
           {/* Desktop CTA Button - Right */}
           <div className="flex">
-            <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors font-medium text-base">
-              <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+            <button className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-base">
+              <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
               Hire Us, Now
             </button>
           </div>
@@ -116,8 +116,8 @@ const Navigation = () => {
               {link.label}
             </a>
           ))}
-          <button className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm">
-            <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+          <button className="w-full bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
+            <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
             Hire Us, Now
           </button>
         </div>

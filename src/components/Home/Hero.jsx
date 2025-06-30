@@ -128,6 +128,9 @@ const Hero = () => {
       
       {/* Client Logos */}
       <ClientLogos />
+      {/* White transition to blend into About */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white z-0" />
+
     </div>
   );
 };
