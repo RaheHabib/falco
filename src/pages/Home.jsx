@@ -3,6 +3,8 @@ import About from '../components/Home/About';
 import Services from '../components/Home/Services';
 import Portfolio from '../components/Home/Portfolio';
 import TestimonialSection from '../components/Home/Quotes';
+import HireUs from '../components/Home/HireUs';
+
 function Home() {
   return (
     <div>
@@ -11,6 +13,7 @@ function Home() {
       <Services />
       <Portfolio />
       <TestimonialSection />
+      <HireUs />
     </div>
   );
 }

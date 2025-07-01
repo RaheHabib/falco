@@ -28,19 +28,19 @@ const TestimonialSection = () => {
   };
 
   return (
-    <div className="relative py-16 px-4 overflow-hidden">
+    <div className="relative py-16 px-4 ">
       {/* Background decorative elements */}
 
-    <div className="absolute w-100 h-100left-30 top-40 sm:left-30 sm:top-80 z-0 pointer-events-none">
+    <div className="absolute w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] left-20 top-30 sm:left-30 sm:top-60 z-0 pointer-events-none">
         <img
         src="/quotes.svg"
         alt="Decorative quotes"
-        className="w-32 sm:w-40 md:w-48 lg:w-56"
+        className="w-full h-full object-contain"
         />
    </div>
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className=" mb-16">
           <p className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-2">
             OUR COMMUNITY
           </p>
