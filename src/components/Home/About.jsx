@@ -31,14 +31,14 @@ const About = () => {
           <div className="absolute inset-0 bg-black bg-opacity-40 rounded-tl-[40px] sm:rounded-tl-[60px] lg:rounded-tl-[90px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]" />
           
           {/* "Get in touch" button - responsive positioning */}
-          <div className="absolute bottom-[-135px] left-0 sm:left-0 z-10">
+          <div className="absolute bottom-[-160px] left-0 sm:left-0 z-10">
             <button className="bg-black text-white px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium hover:bg-opacity-90 transition-all shadow-lg">
               GET IN TOUCH
             </button>
           </div>
           
           {/* Combined content card - responsive positioning and sizing */}
-          <div className="absolute -bottom-16 sm:-bottom-24 lg:-bottom-32 xl:-bottom-[136px] right-0 w-full sm:w-[85%] lg:w-[75%] xl:w-[60%] z-10 shadow-2xl overflow-visible">
+          <div className="absolute -bottom-18 sm:-bottom-24 lg:-bottom-32 xl:-bottom-[160px] right-0 w-full sm:w-[85%] lg:w-[75%] xl:w-[60%] z-10 shadow-2xl overflow-visible">
             {/* Top blur section */}
             <div className="p-4 sm:p-6 lg:p-8 backdrop-blur-md text-white rounded-tl-[40px] sm:rounded-tl-[60px] lg:rounded-tl-[80px]">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
