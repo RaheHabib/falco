@@ -4,6 +4,7 @@ import Services from '../components/Home/Services';
 import Portfolio from '../components/Home/Portfolio';
 import TestimonialSection from '../components/Home/Quotes';
 import HireUs from '../components/Home/HireUs';
+import Community from '../components/Home/Community';
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
       <Portfolio />
       <TestimonialSection />
       <HireUs />
+      <Community />
     </div>
   );
 }
