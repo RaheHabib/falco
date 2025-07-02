@@ -33,8 +33,14 @@ const Portfolio = () => {
   ];
 
   return (
-    <section className="py-24 px-6 sm:px-12 lg:px-32 xl:px-48">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative py-24 px-6 sm:px-12 lg:px-32 xl:px-48">
+      {/* Top left random glow (darker) */}
+      <div className="absolute top-0 left-0 w-60 h-60 bg-gradient-to-br from-purple-700/60 via-indigo-700/50 to-blue-700/50 rounded-full blur-3xl opacity-70 pointer-events-none z-0"></div>
+      {/* Bottom right random glow (darker) */}
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-tr from-pink-700/50 via-purple-700/50 to-blue-700/50 rounded-full blur-3xl opacity-60 pointer-events-none z-0"></div>
+      {/* Center glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-blue-500/40 via-purple-600/40 to-pink-500/40 rounded-full blur-[120px] opacity-60 pointer-events-none z-0"></div>
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-16">
           <div className="lg:max-w-md">

@@ -31,13 +31,15 @@ const TestimonialSection = () => {
     <div className="relative py-16 px-4 ">
       {/* Background decorative elements */}
 
-    <div className="absolute w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] left-20 top-30 sm:left-30 sm:top-60 z-0 pointer-events-none">
+      <div className="absolute w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] left-20 top-30 sm:left-30 sm:top-60 z-0 pointer-events-none">
         <img
-        src="/quotes.svg"
-        alt="Decorative quotes"
-        className="w-full h-full object-contain"
+          src="/quotes.svg"
+          alt="Decorative quotes"
+          className="w-full h-full object-contain"
         />
-   </div>
+      </div>
+      {/* Bottom right glow */}
+      <div className="absolute bottom-0 right-1/4 w-40 h-40 sm:w-60 sm:h-60 bg-gradient-to-tr from-blue-500/50 via-indigo-600/50 to-purple-700/50 rounded-full blur-3xl opacity-60 pointer-events-none z-0"></div>
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className=" mb-16">
