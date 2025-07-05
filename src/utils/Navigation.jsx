@@ -4,8 +4,8 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   const navLinks = [
-    { label: "Home", href: "#" },
-    { label: "Services", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
     { label: "About Us", href: "#" },
     { label: "Contact Us", href: "#" },
   ];
