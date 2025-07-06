@@ -1,6 +1,8 @@
 import React from 'react';
+import Navigation from '@utils/Navigation';
+import StreamingText from '@utils/StreamingText';
 
-const Hero = () => {
+const ServicesHero = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 overflow-hidden">
       {/* Background glow effect */}
@@ -51,9 +53,21 @@ const Hero = () => {
           {/* Central content */}
           <div className="text-center py-16 sm:py-20 md:py-24 lg:py-32">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-gray-900 leading-tight">
-              <span className="block">We Create a</span>
-              <span className="block">future you</span>
-              <span className="block">believe in</span>
+              <StreamingText 
+                text="We Create a" 
+                delay={100}
+                className="block"
+              />
+              <StreamingText 
+                text="future you" 
+                delay={200}
+                className="block"
+              />
+              <StreamingText 
+                text="believe in ..." 
+                delay={300}
+                className="block"
+              />
             </h1>
             
             <div className="mt-8 sm:mt-12 md:mt-16">
@@ -76,4 +90,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default ServicesHero;

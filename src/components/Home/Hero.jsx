@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StreamingText from '@utils/StreamingText';
-import Navigation from '@utils/Navigation';
 
 // Client logos component
 const ClientLogos = () => {
@@ -37,9 +36,6 @@ const Hero = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-      {/* Navigation */}
-      <Navigation />
-      
       {/* Circular Glow Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Main glow circle */}

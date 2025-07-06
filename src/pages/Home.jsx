@@ -7,10 +7,12 @@ import HireUs from '../components/Home/HireUs';
 import Community from '../components/Home/Community';
 import GlowingCTASection from '../components/Home/CTA';
 import Footer from '../components/Home/Footer';
+import Navigation from '@utils/Navigation';
 
 function Home() {
   return (
     <div>
+      <Navigation/>
       <Hero />
       <About />
       <Services />
