@@ -21,28 +21,28 @@ const Hero = () => {
         <div className="relative w-full max-w-4xl mx-auto">
           
           {/* Top left person */}
-          <div className="absolute -top-8 -left-8 sm:-top-32 sm:-left-12 md:-top-36 md:-left-16 lg:-top-30 lg:-left-20">
+          <div className="absolute -top-18 -left-18 sm:top-42 sm:-left-12 md:-top-46 md:-left-20 lg:top-10 lg:-left-20">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-pink-200 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img src="/person1.png" alt="Person 1" className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover" />
             </div>
           </div>
 
           {/* Top right person */}
-          <div className="absolute -top-8 -right-8 sm:-top-12 sm:-right-12 md:-top-16 md:-right-16 lg:-top-20 lg:-right-20">
+          <div className="absolute -top-8 -right-4 sm:-top-12 sm:-right-12 md:-top-16 md:-right-16 lg:top-20 lg:-right-20">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-blue-200 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img src="/person2.png" alt="Person 2" className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover" />
             </div>
           </div>
 
           {/* Bottom left person */}
-          <div className="absolute -bottom-8 -left-8 sm:-bottom-12 sm:-left-12 md:-bottom-16 md:-left-16 lg:-bottom-20 lg:-left-20">
+          <div className="absolute -bottom-8 -left-2 sm:-bottom-12 sm:-left-12 md:-bottom-20 md:-left-16 lg:bottom-10 lg:-left-20">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-cyan-200 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img src="/person3.png" alt="Person 3" className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover" />
             </div>
           </div>
 
           {/* Bottom right person */}
-          <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 md:-bottom-16 md:-right-16 lg:-bottom-20 lg:-right-20">
+          <div className="absolute -bottom-8 -right-0 sm:-bottom-12 sm:-right-12 md:-bottom-16 md:-right-16 lg:bottom-20 lg:-right-20">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-pink-200 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img src="/person4.png" alt="Person 4" className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover" />
             </div>
@@ -66,9 +66,12 @@ const Hero = () => {
       </div>
       
       {/* Divider */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-20">
         <div className="mx-[10%] border-t border-gray-300"></div>
       </div>
+      
+      {/* White transition overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white z-10"></div>
     </div>
   );
 };
