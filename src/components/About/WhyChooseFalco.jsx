@@ -2,7 +2,9 @@ import React from 'react';
 
 const WhyChooseFalco = () => {
   return (
-    <div className="py-12 md:py-16 lg:py-20">
+    <div className="relative py-12 md:py-16 lg:py-20">
+      <div className="absolute bottom-20 left-0 w-80 h-80 bg-gradient-to-tr from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-3xl opacity-60 pointer-events-none z-0"></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
           {/* Left Column - Content */}
