@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send, Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from 'lucide-react';
 
 const HireUs = () => {
@@ -9,6 +9,27 @@ const HireUs = () => {
     projectType: '',
     description: ''
   });
+
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '50px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +55,7 @@ const HireUs = () => {
   ];
 
   return (
-    <section className="relative ...">
+    <section ref={sectionRef} className="relative ...">
       {/* Glow OUTSIDE the content container */}
       <div className="absolute bottom-0 right-0 w-60 h-60 lg:w-96 lg:h-96 rounded-full bg-gradient-to-tr from-blue-400/30 via-indigo-400/30 to-purple-500/30 blur-3xl pointer-events-none z-0"></div>
       <div className="max-w-5xl mx-auto relative z-10">
@@ -45,7 +66,13 @@ const HireUs = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               
               {/* Left Section - Contact Form */}
-              <div className="relative">
+              <div 
+                className={`relative transition-all duration-700 ease-out ${
+                  isVisible 
+                    ? 'opacity-100 transform translate-x-0' 
+                    : 'opacity-0 transform -translate-x-12'
+                }`}
+              >
                 {/* Hire us title */}
                 <div className="mb-8">
                   <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
@@ -159,7 +186,14 @@ const HireUs = () => {
               </div>
 
               {/* Right Section - Contact Information */}
-              <div className="space-y-12">
+              <div 
+                className={`space-y-12 transition-all duration-700 ease-out ${
+                  isVisible 
+                    ? 'opacity-100 transform translate-x-0' 
+                    : 'opacity-0 transform translate-x-12'
+                }`}
+                style={{ transitionDelay: '200ms' }}
+              >
                 {/* Contact us title */}
                 <div>
                   <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">

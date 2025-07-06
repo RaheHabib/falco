@@ -69,7 +69,7 @@ const Portfolio = () => {
             >
               {/* Decorative Wave Icon */}
               <div className="mb-4">
-                <img src="/curl.svg" alt="Curl Icon" className="w-8 h-8 text-gray-400" />
+                <img src="/orange_curl.svg" alt="Curl Icon" className="w-8 h-8 text-gray-400" />
               </div>
 
               {/* Project Title */}

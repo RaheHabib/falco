@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const Community = () => {
@@ -6,6 +6,20 @@ const Community = () => {
   const [questionForm, setQuestionForm] = useState({
     subject: '',
     description: ''
+  });
+
+  // Refs for elements to animate
+  const headerRef = useRef(null);
+  const leftSectionRef = useRef(null);
+  const rightSectionRef = useRef(null);
+  const faqRefs = useRef([]);
+
+  // Animation states
+  const [animations, setAnimations] = useState({
+    header: false,
+    leftSection: false,
+    rightSection: false,
+    faqs: []
   });
 
   const faqs = [
@@ -35,6 +49,67 @@ const Community = () => {
     }
   ];
 
+  // Initialize FAQ refs array
+  useEffect(() => {
+    faqRefs.current = faqRefs.current.slice(0, faqs.length);
+  }, [faqs.length]);
+
+  // Set up Intersection Observer
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -10% 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const target = entry.target;
+        const isVisible = entry.isIntersecting;
+
+        if (target === headerRef.current) {
+          setAnimations(prev => ({ ...prev, header: isVisible }));
+        } else if (target === leftSectionRef.current) {
+          setAnimations(prev => ({ ...prev, leftSection: isVisible }));
+        } else if (target === rightSectionRef.current) {
+          setAnimations(prev => ({ ...prev, rightSection: isVisible }));
+        } else {
+          // Handle FAQ items
+          const faqIndex = faqRefs.current.indexOf(target);
+          if (faqIndex !== -1) {
+            setAnimations(prev => ({
+              ...prev,
+              faqs: prev.faqs.map((faq, index) => 
+                index === faqIndex ? isVisible : faq
+              )
+            }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (leftSectionRef.current) observer.observe(leftSectionRef.current);
+    if (rightSectionRef.current) observer.observe(rightSectionRef.current);
+    
+    faqRefs.current.forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Initialize FAQ animations array
+  useEffect(() => {
+    setAnimations(prev => ({
+      ...prev,
+      faqs: new Array(faqs.length).fill(false)
+    }));
+  }, [faqs.length]);
+
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? -1 : index);
   };
@@ -54,7 +129,7 @@ const Community = () => {
   };
 
   return (
-    <section className="relative ...">
+    <section className="relative">
       {/* Glow OUTSIDE the content container */}
       <div className="absolute top-0 left-0 w-[32rem] h-[32rem] bg-purple-500 rounded-full blur-3xl opacity-20 pointer-events-none z-0"></div>
       <div className="absolute top-8 left-8 w-[24rem] h-[24rem] bg-purple-400 rounded-full blur-2xl opacity-15 pointer-events-none z-0"></div>
@@ -62,7 +137,14 @@ const Community = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="top-20 relative py-16 px-4 overflow-hidden mx-auto max-w-5xl md:px-8 lg:px-16">
           {/* Header */}
-          <div className="mb-16">
+          <div 
+            ref={headerRef}
+            className={`mb-16 transition-all duration-1000 ease-out ${
+              animations.header 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-12'
+            }`}
+          >
             <p className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
               OUR COMMUNITY
             </p>
@@ -77,10 +159,19 @@ const Community = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             
             {/* Left Section - Illustration and Question Form */}
-            <div className="space-y-8">
+            <div 
+              ref={leftSectionRef}
+              className={`space-y-8 transition-all duration-1000 ease-out delay-200 ${
+                animations.leftSection 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 -translate-x-12'
+              }`}
+            >
               {/* Question Illustration */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative">
+                  {/* Replace this div with your question.png image */}
+                  <div className="relative">
                   {/* Replace this div with your question.png image */}
                   <img 
                   src="question.png" 
@@ -89,10 +180,11 @@ const Community = () => {
                   />
 
                 </div>
+                </div>
               </div>
 
               {/* Question Submission Form */}
-              <div className="bg-black rounded-lg p-6 text-white">
+              <div className="bg-black rounded-lg p-6 text-white transform hover:scale-105 transition-transform duration-300">
                 <h3 className="text-xl font-semibold mb-2">Don't find your answer!</h3>
                 <p className="text-gray-300 text-sm mb-6">
                   Don't worry, write your question here and our support team will help you.
@@ -125,7 +217,7 @@ const Community = () => {
 
                   <button
                     onClick={handleSubmitQuestion}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors transform hover:scale-105"
                   >
                     SUBMIT QUESTION
                   </button>
@@ -134,9 +226,27 @@ const Community = () => {
             </div>
 
             {/* Right Section - FAQ List */}
-            <div className="space-y-4">
+            <div 
+              ref={rightSectionRef}
+              className={`space-y-4 transition-all duration-1000 ease-out delay-400 ${
+                animations.rightSection 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-12'
+              }`}
+            >
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-black rounded-lg overflow-hidden">
+                <div 
+                  key={index} 
+                  ref={el => faqRefs.current[index] = el}
+                  className={`bg-black rounded-lg overflow-hidden transform transition-all duration-700 ease-out hover:scale-105 ${
+                    animations.faqs[index] 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{
+                    transitionDelay: `${600 + index * 100}ms`
+                  }}
+                >
                   {/* Question Header */}
                   <button
                     onClick={() => toggleFaq(index)}
@@ -147,15 +257,17 @@ const Community = () => {
                     </span>
                     <div className="flex-shrink-0">
                       {openFaq === index ? (
-                        <ChevronUp className="w-5 h-5 text-white" />
+                        <ChevronUp className="w-5 h-5 text-white transform transition-transform duration-300" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-white" />
+                        <ChevronDown className="w-5 h-5 text-white transform transition-transform duration-300" />
                       )}
                     </div>
                   </button>
 
                   {/* Answer Content */}
-                  {openFaq === index && (
+                  <div className={`overflow-hidden transition-all duration-500 ease-out ${
+                    openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
                     <div className="px-6 pb-6">
                       <div className="border-t border-gray-700 pt-4">
                         <div className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">
@@ -163,7 +275,7 @@ const Community = () => {
                         </div>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>
