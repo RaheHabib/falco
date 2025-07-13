@@ -7,7 +7,7 @@ export default function GlowingCTASection() {
             {/* Purple Glow Background - Multiple layers for better visibility */}
             <div className="absolute inset-0 bg-purple-500 rounded-2xl blur-3xl opacity-20"></div>
             <div className="absolute inset-0 bg-purple-400 rounded-2xl blur-2xl opacity-15"></div>
-            <div className="absolute inset-0 bg-purple-600 rounded-2xl blur-xl opacity-10"></div>
+            {/* <div className="absolute inset-0 bg-purple-600 rounded-2xl blur-xl opacity-10"></div> */}
             
             {/* Main Content Container */}
             <div className="relative bg-black p-16 text-center">
@@ -17,11 +17,7 @@ export default function GlowingCTASection() {
                 <div className="w-12 h-0.5 bg-white mb-2"></div>
                 <div className="w-8 h-0.5 bg-white"></div>
               </div>
-              
-              <div className="absolute bottom-8 right-8">
-                <div className="w-3 h-3 border border-white rounded-full mb-2"></div>
-                <div className="w-2 h-2 border border-white rounded-full ml-4"></div>
-              </div>
+
               
               {/* Main Content */}
               <div className="space-y-8">

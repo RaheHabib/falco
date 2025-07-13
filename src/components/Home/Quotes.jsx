@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionRef = React.useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-50px" });
 
   const testimonials = [
     {
@@ -24,25 +25,6 @@ const TestimonialSection = () => {
       content: "Lorem ipsum dolor sit amet consectetur. Sed quam sed duis commodo adipiscing ipsum et. Arcu urna sit lectus malesuada convallis integer et. Tempor velit euismod feugiat in proin habitant imperdiet vulputate."
     }
   ];
-
-  // Intersection Observer for fade-in effect
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   // Optimized navigation functions with animation debouncing
   const nextSlide = useCallback(() => {
@@ -77,15 +59,16 @@ const TestimonialSection = () => {
   ), []);
 
   return (
-    <div 
+    <motion.div 
       ref={sectionRef}
-      className={`relative py-16 px-4 transition-all duration-1000 transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className="relative py-12 sm:py-16 px-4 sm:px-6 md:px-8 overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 1, ease: "easeOut" }}
     >
       {/* Background decorative elements - optimized with transform3d */}
       <div 
-        className="absolute w-[24rem] h-[24rem] sm:w-[32rem] sm:h-[32rem] left-20 top-30 sm:left-30 sm:top-60 z-0 pointer-events-none"
+        className="absolute w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 left-4 sm:left-8 md:left-20 top-20 sm:top-30 md:top-60 z-0 pointer-events-none"
         style={{ transform: 'translate3d(0, 0, 0)' }}
       >
         <img
@@ -98,97 +81,109 @@ const TestimonialSection = () => {
       
       {/* Bottom right glow - optimized with will-change */}
       <div 
-        className="absolute bottom-0 right-1/4 w-40 h-40 sm:w-60 sm:h-60 bg-gradient-to-tr from-blue-500/50 via-indigo-600/50 to-purple-700/50 rounded-full blur-3xl opacity-60 pointer-events-none z-0"
+        className="absolute bottom-0 right-1/4 w-32 h-32 sm:w-40 sm:h-40 md:w-60 md:h-60 bg-gradient-to-tr from-blue-500/50 via-indigo-600/50 to-purple-700/50 rounded-full blur-3xl opacity-60 pointer-events-none z-0"
         style={{ willChange: 'transform' }}
       ></div>
       
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header - Animate on scroll */}
-        <div className={`mb-16 transition-all duration-700 delay-200 ${
-          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-        }`}>
-          <p className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-2">
+        <motion.div 
+          className="mb-12 sm:mb-16"
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+        >
+          <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-wider uppercase mb-2">
             OUR COMMUNITY
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
             Community love{' '}
-            <span className="bg-gray-700 text-white px-3 py-1 rounded">
+            <span className="bg-gray-700 text-white px-2 py-1 sm:px-3 sm:py-1 rounded text-sm sm:text-base">
               us
             </span>
           </h2>
-        </div>
+        </motion.div>
 
         {/* Navigation arrows - Animate on scroll */}
-        <div className={`absolute right-0 top-16 flex space-x-2 z-20 transition-all duration-700 delay-400 ${
-          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-        }`}>
+        <motion.div 
+          className="absolute right-0 top-12 sm:top-16 flex space-x-2 z-20"
+          initial={{ opacity: 0, x: 20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+        >
           <button
             onClick={prevSlide}
             disabled={isAnimating}
-            className="p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors disabled:opacity-50"
+            className="p-1.5 sm:p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors disabled:opacity-50"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
           <button
             onClick={nextSlide}
             disabled={isAnimating}
-            className="p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors disabled:opacity-50"
+            className="p-1.5 sm:p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors disabled:opacity-50"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
-        </div>
+        </motion.div>
 
         {/* Testimonials grid - Optimized with memoized states */}
-        <div className="grid md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
           {testimonialStates.map(({ isActive, isPrev, isNext, index }) => {
             const testimonial = testimonials[index];
             
             return (
-              <div
+              <motion.div
                 key={testimonial.id}
-                className={`
-                  relative transition-all duration-500 transform
-                  ${isActive ? 'scale-105 z-10' : isPrev || isNext ? 'scale-100 z-5' : 'scale-95 opacity-50 md:opacity-100'}
-                  ${isVisible ? 'translate-y-0' : 'translate-y-8'}
-                `}
+                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { 
+                  opacity: isActive ? 1 : (isPrev || isNext ? 0.8 : 0.5),
+                  y: 0,
+                  scale: isActive ? 1.05 : (isPrev || isNext ? 1 : 0.95)
+                } : { opacity: 0, y: 20, scale: 0.95 }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: 0.6 + index * 0.1,
+                  ease: "easeOut"
+                }}
                 style={{ 
-                  transitionDelay: `${600 + index * 100}ms`,
                   willChange: isAnimating ? 'transform' : 'auto'
                 }}
               >
                 {/* Quote icon - Top */}
-                <div className="absolute -top-4 left-6 z-10">
-                  <div className="w-8 h-8 bg-gray-800 rounded flex items-center justify-center">
-                    <QuoteIcon size="w-4 h-4" />
+                <div className="absolute -top-3 sm:-top-4 left-4 sm:left-6 z-10">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-800 rounded flex items-center justify-center">
+                    <QuoteIcon size="w-3 h-3 sm:w-4 sm:h-4" />
                   </div>
                 </div>
 
                 {/* Testimonial card */}
-                <div className="bg-white rounded-lg p-8 pt-12 shadow-sm border border-gray-100 h-full">
-                  <p className="text-gray-600 leading-relaxed mb-6 text-sm">
+                <div className="bg-white rounded-lg p-6 sm:p-8 pt-10 sm:pt-12 shadow-sm border border-gray-100 h-full">
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
                     {testimonial.content}
                   </p>
                   
                   {/* Bottom quote icon */}
-                  <div className="flex justify-end mb-4">
-                    <div className="w-6 h-6 bg-gray-800 rounded flex items-center justify-center">
-                      <QuoteIcon size="w-3 h-3" rotate={true} />
+                  <div className="flex justify-end mb-3 sm:mb-4">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 bg-gray-800 rounded flex items-center justify-center">
+                      <QuoteIcon size="w-2.5 h-2.5 sm:w-3 sm:h-3" rotate={true} />
                     </div>
                   </div>
                   
                   {/* Name */}
-                  <h3 className="font-bold text-gray-900 text-lg">
+                  <h3 className="font-bold text-gray-900 text-base sm:text-lg">
                     {testimonial.name}
                   </h3>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

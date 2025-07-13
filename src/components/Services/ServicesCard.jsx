@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   Network, 
   FileText, 
@@ -13,9 +14,9 @@ import {
   Monitor 
 } from 'lucide-react';
 
-const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false }) => {
+const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false, index }) => {
   return (
-    <div 
+    <motion.div 
       className={`
         relative p-4 sm:p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 cursor-pointer max-w-xs mx-auto w-full
         ${isHighlighted 
@@ -23,11 +24,27 @@ const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false }) => 
           : 'border-black bg-white hover:border-gray-800'
         }
       `}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: "easeOut"
+      }}
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+      }}
     >
       <div className="flex flex-col items-center text-center space-y-3">
-        <div className="p-3 rounded-full bg-black">
+        <motion.div 
+          className="p-3 rounded-full bg-black"
+          whileHover={{ rotate: 360 }}
+          transition={{ duration: 0.3 }}
+        >
           <Icon className="w-6 h-6 text-white" />
-        </div>
+        </motion.div>
         <div>
           <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight">
             {title}
@@ -39,7 +56,7 @@ const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false }) => 
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -114,6 +131,18 @@ const ServicesComponent = () => {
     }
   ];
 
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="relative min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       {/* Orange glow effect */}
@@ -121,14 +150,26 @@ const ServicesComponent = () => {
       
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Let's get started on something great
           </h1>
-        </div>
+        </motion.div>
 
         {/* Production Services */}
-        <div className="mb-16">
+        <motion.div 
+          className="mb-16"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
             Production Services
           </h2>
@@ -139,13 +180,20 @@ const ServicesComponent = () => {
                 icon={service.icon}
                 title={service.title}
                 subtitle={service.subtitle}
+                index={index}
               />
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Media & Marketing Services */}
-        <div className="mb-16">
+        <motion.div 
+          className="mb-16"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
             Media & Marketing Services
           </h2>
@@ -157,13 +205,19 @@ const ServicesComponent = () => {
                 title={service.title}
                 subtitle={service.subtitle}
                 isHighlighted={service.isHighlighted}
+                index={index}
               />
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Design & Development Services */}
-        <div>
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
             Design & Development Services
           </h2>
@@ -174,10 +228,11 @@ const ServicesComponent = () => {
                 icon={service.icon}
                 title={service.title}
                 subtitle={service.subtitle}
+                index={index}
               />
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

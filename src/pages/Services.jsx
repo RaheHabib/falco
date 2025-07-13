@@ -16,7 +16,7 @@ function Home() {
       <Navigation />
       <Hero />
       <CareersSection />
-      <OurServices />
+      <OurServices /> 
       <ServicesCard />
       <ProcessComponent />
       <Portfolio />

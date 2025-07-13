@@ -1,127 +1,109 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const About = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef(null);
-  const topCardRef = useRef(null);
-  const bottomCardRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '50px'
+  // Animation variants for cards
+  const topCardVariants = {
+    hidden: { 
+      x: 100, 
+      opacity: 0.5 
+    },
+    visible: { 
+      x: 0, 
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
       }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
     }
+  };
 
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isVisible && sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const elementTop = rect.top;
-        const elementHeight = rect.height;
-        
-        // Calculate scroll progress (0 to 1)
-        const progress = Math.max(0, Math.min(1, (windowHeight - elementTop) / (windowHeight + elementHeight)));
-        setScrollProgress(progress);
+  const bottomCardVariants = {
+    hidden: { 
+      x: 150, 
+      opacity: 0.2 
+    },
+    visible: { 
+      x: 0, 
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.2
       }
-    };
-
-    if (isVisible) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
     }
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isVisible]);
-  
-  const topCardTransform = {
-    transform: `translateX(${100 - (scrollProgress * 100)}px)`,
-    opacity: 0.5 + (scrollProgress * 0.5)
   };
-  
-  const bottomCardTransform = {
-    transform: `translateX(${150 - (scrollProgress * 150)}px)`,
-    opacity: 0.2 + (scrollProgress * 0.8)
-  };
-  
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen py-8 lg:py-16 bg-white z-10">
+    <section className="relative bg-white z-10 overflow-hidden py-10 sm:py-8 md:py-12 lg:py-16">
       {/* Vertical "About us" text - hidden on mobile, responsive positioning */}
-      <div className="absolute left-56 sm:left-64 lg:left-78 xl:left-[20rem] top-1/2 transform -translate-y-1/2 hidden lg:block z-20">
-        <div className="text-[#333] text-lg xl:text-xl font-bold uppercase tracking-wider transform -rotate-90 origin-left whitespace-nowrap">
+      <div className="absolute left-8 sm:left-16 lg:left-20 xl:left-24 top-1/2 transform -translate-y-1/2 hidden lg:block z-20">
+        <div className="text-[#333] text-sm sm:text-base lg:text-lg xl:text-xl font-bold uppercase tracking-wider transform -rotate-90 origin-left whitespace-nowrap">
           About us
         </div>
       </div>
 
       {/* Mobile "About us" text - visible only on mobile */}
-      <div className="block lg:hidden text-center mb-8">
-        <h1 className="text-[#333] text-2xl sm:text-3xl font-bold uppercase tracking-wider">
+      <div className="block lg:hidden text-center mb-6 sm:mb-8">
+        <h1 className="text-[#333] text-xl sm:text-2xl md:text-3xl font-bold uppercase tracking-wider">
           About us
         </h1>
       </div>
 
-      <div className="mx-4 sm:mx-8 lg:mx-16 xl:mx-24 lg:ml-32 xl:ml-40">
-        {/* Image box */}
-        <div className="relative max-w-full lg:max-w-[90vh] xl:max-w-[100vh] mx-auto min-h-[50vh] sm:min-h-[60vh] lg:min-h-[70vh] overflow-visible pb-20 sm:pb-32 lg:pb-40">
-          {/* Background image */}
-          <img
-            src="/aboutbg.png"
-            alt="Office building interior"
-            className="absolute inset-0 w-full h-full object-cover rounded-tl-[40px] sm:rounded-tl-[60px] lg:rounded-tl-[90px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          />
+      <div className="mx-2 sm:mx-4 md:mx-8 lg:mx-12 xl:mx-16 lg:ml-20 xl:ml-24">
+        {/* Main content wrapper - Fixed spacing */}
+        <div className="relative max-w-full lg:max-w-[90vh] xl:max-w-[100vh] mx-auto">
+          {/* Image container with proper height */}
+          <div className="relative min-h-[40vh] sm:min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] mb-16 sm:mb-20 md:mb-24 lg:mb-32">
+            {/* Background image */}
+            <img
+              src="/aboutbg.png"
+              alt="Office building interior"
+              className="absolute inset-0 w-full h-full object-cover rounded-tl-[20px] sm:rounded-tl-[30px] md:rounded-tl-[40px] lg:rounded-tl-[60px] xl:rounded-tl-[90px] rounded-tr-[8px] sm:rounded-tr-[10px] rounded-bl-[8px] sm:rounded-bl-[10px] rounded-br-[8px] sm:rounded-br-[10px]"
+            />
 
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black bg-opacity-40 rounded-tl-[40px] sm:rounded-tl-[60px] lg:rounded-tl-[90px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]" />
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-black bg-opacity-40 rounded-tl-[20px] sm:rounded-tl-[30px] md:rounded-tl-[40px] lg:rounded-tl-[60px] xl:rounded-tl-[90px] rounded-tr-[8px] sm:rounded-tr-[10px] rounded-bl-[8px] sm:rounded-bl-[10px] rounded-br-[8px] sm:rounded-br-[10px]" />
 
-          {/* "Get in touch" button - responsive positioning */}
-          <div className="absolute bottom-[-160px] left-0 sm:left-0 z-10">
-            <button className="bg-black text-white px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium hover:bg-opacity-90 transition-all shadow-lg">
-              GET IN TOUCH
-            </button>
-          </div>
-
-          {/* Combined content card - responsive positioning and sizing with slide animation */}
-          <div className="absolute -bottom-18 sm:-bottom-24 lg:-bottom-32 xl:-bottom-[160px] right-0 w-full sm:w-[85%] lg:w-[75%] xl:w-[60%] z-10 shadow-2xl overflow-visible">
-            {/* Top blur section */}
-            <div 
-              ref={topCardRef}
-              className="p-4 sm:p-6 lg:p-8 backdrop-blur-md text-white rounded-tl-[40px] sm:rounded-tl-[60px] lg:rounded-tl-[80px] bg-black bg-opacity-30"
-              style={topCardTransform}
-            >
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
-                We're Falco Solutions
-              </h2>
-              <p className="text-xs sm:text-sm lg:text-base leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam leo urna turpis semper sed a vulputate mi.
-                Diam nisl non in et mattis. Sit pulvinar cursus integer lectus sagittis bibendum. Rhoncus cras diam tellus convallis.
-              </p>
+            {/* "Get in touch" button - Fixed positioning */}
+            <div className="absolute bottom-[-100px] sm:bottom-[-60px] md:bottom-[-70px] lg:bottom-[-80px] left-0 z-10">
+              <button className="bg-black text-white px-3 py-4 sm:px-4 sm:py-2 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-medium hover:bg-opacity-90 transition-all shadow-lg">
+                GET IN TOUCH
+              </button>
             </div>
 
-            {/* Bottom solid section */}
-            <div 
-              ref={bottomCardRef}
-              className="p-4 sm:p-6 lg:p-8 bg-white text-black"
-              style={bottomCardTransform}
+            {/* Combined content card - Fixed positioning */}
+            <motion.div 
+              className="absolute bottom-[-60px] sm:bottom-[-80px] md:bottom-[-100px] lg:bottom-[-120px] xl:bottom-[-140px] right-0 w-full sm:w-[90%] md:w-[85%] lg:w-[75%] xl:w-[60%] z-10 shadow-2xl"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
             >
-              <p className="text-xs sm:text-sm lg:text-base leading-relaxed">
-                Condimentum aliquam arcu arcu massa purus egestas ante vulputate nisl. Nisl tellus non, eu velit mauris, lectus vel, ornare.
-                Pellentesque in at ac tortor ipsum commodo.
-              </p>
-            </div>
+              {/* Top blur section */}
+              <motion.div 
+                className="p-3 sm:p-4 md:p-6 lg:p-8 backdrop-blur-md text-white rounded-tl-[20px] sm:rounded-tl-[30px] md:rounded-tl-[40px] lg:rounded-tl-[60px] xl:rounded-tl-[80px] bg-black bg-opacity-30"
+                variants={topCardVariants}
+              >
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 md:mb-4">
+                  We're Falco Solutions
+                </h2>
+                <p className="text-xs sm:text-sm md:text-base leading-relaxed">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam leo urna turpis semper sed a vulputate mi.
+                  Diam nisl non in et mattis. Sit pulvinar cursus integer lectus sagittis bibendum. Rhoncus cras diam tellus convallis.
+                </p>
+              </motion.div>
+
+              {/* Bottom solid section */}
+              <motion.div 
+                className="p-3 sm:p-4 md:p-6 lg:p-8 bg-white text-black"
+                variants={bottomCardVariants}
+              >
+                <p className="text-xs sm:text-sm md:text-base leading-relaxed">
+                  Condimentum aliquam arcu arcu massa purus egestas ante vulputate nisl. Nisl tellus non, eu velit mauris, lectus vel, ornare.
+                  Pellentesque in at ac tortor ipsum commodo.
+                </p>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>

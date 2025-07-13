@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const Community = () => {
@@ -9,18 +10,15 @@ const Community = () => {
   });
 
   // Refs for elements to animate
-  const headerRef = useRef(null);
-  const leftSectionRef = useRef(null);
-  const rightSectionRef = useRef(null);
-  const faqRefs = useRef([]);
+  const headerRef = React.useRef(null);
+  const leftSectionRef = React.useRef(null);
+  const rightSectionRef = React.useRef(null);
+  const faqRefs = React.useRef([]);
 
-  // Animation states
-  const [animations, setAnimations] = useState({
-    header: false,
-    leftSection: false,
-    rightSection: false,
-    faqs: []
-  });
+  // Use Framer Motion's useInView hook
+  const headerInView = useInView(headerRef, { once: true, margin: "-50px" });
+  const leftSectionInView = useInView(leftSectionRef, { once: true, margin: "-50px" });
+  const rightSectionInView = useInView(rightSectionRef, { once: true, margin: "-50px" });
 
   const faqs = [
     {
@@ -49,67 +47,6 @@ const Community = () => {
     }
   ];
 
-  // Initialize FAQ refs array
-  useEffect(() => {
-    faqRefs.current = faqRefs.current.slice(0, faqs.length);
-  }, [faqs.length]);
-
-  // Set up Intersection Observer
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-10% 0px -10% 0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const target = entry.target;
-        const isVisible = entry.isIntersecting;
-
-        if (target === headerRef.current) {
-          setAnimations(prev => ({ ...prev, header: isVisible }));
-        } else if (target === leftSectionRef.current) {
-          setAnimations(prev => ({ ...prev, leftSection: isVisible }));
-        } else if (target === rightSectionRef.current) {
-          setAnimations(prev => ({ ...prev, rightSection: isVisible }));
-        } else {
-          // Handle FAQ items
-          const faqIndex = faqRefs.current.indexOf(target);
-          if (faqIndex !== -1) {
-            setAnimations(prev => ({
-              ...prev,
-              faqs: prev.faqs.map((faq, index) => 
-                index === faqIndex ? isVisible : faq
-              )
-            }));
-          }
-        }
-      });
-    }, observerOptions);
-
-    // Observe elements
-    if (headerRef.current) observer.observe(headerRef.current);
-    if (leftSectionRef.current) observer.observe(leftSectionRef.current);
-    if (rightSectionRef.current) observer.observe(rightSectionRef.current);
-    
-    faqRefs.current.forEach(ref => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  // Initialize FAQ animations array
-  useEffect(() => {
-    setAnimations(prev => ({
-      ...prev,
-      faqs: new Array(faqs.length).fill(false)
-    }));
-  }, [faqs.length]);
-
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? -1 : index);
   };
@@ -129,137 +66,129 @@ const Community = () => {
   };
 
   return (
-    <section className="relative">
+    <section className="relative overflow-hidden">
       {/* Glow OUTSIDE the content container */}
-      <div className="absolute top-0 left-0 w-[32rem] h-[32rem] bg-purple-500 rounded-full blur-3xl opacity-20 pointer-events-none z-0"></div>
-      <div className="absolute top-8 left-8 w-[24rem] h-[24rem] bg-purple-400 rounded-full blur-2xl opacity-15 pointer-events-none z-0"></div>
-      <div className="absolute top-16 left-16 w-[16rem] h-[16rem] bg-purple-600 rounded-full blur-xl opacity-10 pointer-events-none z-0"></div>
+      <div className="absolute top-14 left-0 w-64 h-64 sm:w-70 sm:h-70 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] bg-purple-500 rounded-full blur-3xl opacity-20 pointer-events-none z-0"></div>
+      {/* <div className="absolute top-8 left-8 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[24rem] lg:h-[24rem] bg-purple-400 rounded-full blur-2xl opacity-15 pointer-events-none z-0"></div> */}
+      {/* <div className="absolute top-22 left-16 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-[16rem] lg:h-[16rem] bg-purple-600 rounded-full blur-xl opacity-10 pointer-events-none z-0"></div> */}
       <div className="max-w-5xl mx-auto relative z-10">
-        <div className="top-20 relative py-16 px-4 overflow-hidden mx-auto max-w-5xl md:px-8 lg:px-16">
+        <div className="top-20 relative sm:py-16 px-4 sm:px-6 md:px-8 lg:px-16 overflow-hidden mx-auto max-w-5xl">
           {/* Header */}
-          <div 
+          <motion.div 
             ref={headerRef}
-            className={`mb-16 transition-all duration-1000 ease-out ${
-              animations.header 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-12'
-            }`}
+            className="mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <p className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+            <p className="text-xs sm:text-sm font-semibold text-gray-600 tracking-wider uppercase mb-2 sm:mb-4">
               OUR COMMUNITY
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
               Community's{' '}
-              <span className="bg-gray-700 text-white px-3 py-1 rounded">
+              <span className="bg-gray-700 text-white px-2 py-1 sm:px-3 sm:py-1 rounded text-sm sm:text-base">
                 questions
               </span>
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
             
             {/* Left Section - Illustration and Question Form */}
-            <div 
+            <motion.div 
               ref={leftSectionRef}
-              className={`space-y-8 transition-all duration-1000 ease-out delay-200 ${
-                animations.leftSection 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 -translate-x-12'
-              }`}
+              className="space-y-6 sm:space-y-8"
+              initial={{ opacity: 0, x: -30 }}
+              animate={leftSectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
             >
               {/* Question Illustration */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative">
-                  {/* Replace this div with your question.png image */}
-                  <div className="relative">
-                  {/* Replace this div with your question.png image */}
                   <img 
-                  src="question.png" 
-                  alt="Person with questions" 
-                  className="w-120 h-120 object-contain" 
+                    src="question.png" 
+                    alt="Person with questions" 
+                    className="w-80 h-80 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] object-contain" 
                   />
-
-                </div>
                 </div>
               </div>
 
               {/* Question Submission Form */}
-              <div className="bg-black rounded-lg p-6 text-white transform hover:scale-105 transition-transform duration-300">
-                <h3 className="text-xl font-semibold mb-2">Don't find your answer!</h3>
-                <p className="text-gray-300 text-sm mb-6">
+              <div className="bg-black rounded-lg p-4 sm:p-6 text-white transform hover:scale-105 transition-transform duration-300">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">Don't find your answer!</h3>
+                <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
                   Don't worry, write your question here and our support team will help you.
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Subject</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2">Subject</label>
                     <input
                       type="text"
                       name="subject"
                       value={questionForm.subject}
                       onChange={handleInputChange}
-                      className="w-full bg-transparent border border-gray-600 rounded px-4 py-3 focus:outline-none focus:border-blue-400 transition-colors"
+                      className="w-full bg-transparent border border-gray-600 rounded px-3 py-2 sm:px-4 sm:py-3 focus:outline-none focus:border-blue-400 transition-colors text-sm sm:text-base"
                       placeholder=""
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Describe your Project</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2">Describe your Project</label>
                     <textarea
                       name="description"
                       value={questionForm.description}
                       onChange={handleInputChange}
-                      rows={4}
-                      className="w-full bg-transparent border border-gray-600 rounded px-4 py-3 focus:outline-none focus:border-blue-400 transition-colors resize-none"
+                      rows={3}
+                      className="w-full bg-transparent border border-gray-600 rounded px-3 py-2 sm:px-4 sm:py-3 focus:outline-none focus:border-blue-400 transition-colors resize-none text-sm sm:text-base"
                       placeholder=""
                     ></textarea>
                   </div>
 
                   <button
                     onClick={handleSubmitQuestion}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors transform hover:scale-105"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors transform hover:scale-105 text-sm sm:text-base"
                   >
                     SUBMIT QUESTION
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Section - FAQ List */}
-            <div 
+            <motion.div 
               ref={rightSectionRef}
-              className={`space-y-4 transition-all duration-1000 ease-out delay-400 ${
-                animations.rightSection 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 translate-x-12'
-              }`}
+              className="space-y-3 sm:space-y-4"
+              initial={{ opacity: 0, x: 30 }}
+              animate={rightSectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+              transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
             >
               {faqs.map((faq, index) => (
-                <div 
+                <motion.div 
                   key={index} 
                   ref={el => faqRefs.current[index] = el}
-                  className={`bg-black rounded-lg overflow-hidden transform transition-all duration-700 ease-out hover:scale-105 ${
-                    animations.faqs[index] 
-                      ? 'opacity-100 translate-y-0' 
-                      : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{
-                    transitionDelay: `${600 + index * 100}ms`
+                  className="bg-black rounded-lg overflow-hidden transform transition-all duration-700 ease-out hover:scale-105"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={rightSectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ 
+                    duration: 0.7, 
+                    delay: 0.6 + index * 0.1,
+                    ease: "easeOut"
                   }}
                 >
                   {/* Question Header */}
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-900 transition-colors"
+                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between hover:bg-gray-900 transition-colors"
                   >
-                    <span className="text-white font-medium pr-4 text-sm md:text-base">
+                    <span className="text-white font-medium pr-2 sm:pr-4 text-xs sm:text-sm md:text-base">
                       {faq.question}
                     </span>
                     <div className="flex-shrink-0">
                       {openFaq === index ? (
-                        <ChevronUp className="w-5 h-5 text-white transform transition-transform duration-300" />
+                        <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-white transform transition-transform duration-300" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-white transform transition-transform duration-300" />
+                        <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-white transform transition-transform duration-300" />
                       )}
                     </div>
                   </button>
@@ -268,17 +197,17 @@ const Community = () => {
                   <div className={`overflow-hidden transition-all duration-500 ease-out ${
                     openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
-                    <div className="px-6 pb-6">
-                      <div className="border-t border-gray-700 pt-4">
-                        <div className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">
+                    <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                      <div className="border-t border-gray-700 pt-3 sm:pt-4">
+                        <div className="text-gray-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
                           {faq.answer}
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
