@@ -63,7 +63,7 @@ const ContactUs = () => {
         }
       `}</style>
       
-      <div className="min-h-screen py-4 sm:py-6 md:py-8 lg:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+      <div className="min-h-screen mt-40 py-4 sm:py-6 md:py-8 lg:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
         {/* Static background glows - removed complex animations */}
         <div className="absolute left-0 top-20 w-80 h-80 bg-gradient-to-tr from-violet-400/30 via-purple-500/20 to-purple-400/30 rounded-full blur-3xl pointer-events-none z-0 opacity-60" />
         <div className="absolute right-0 top-40 w-80 h-80 bg-gradient-to-tr from-violet-400/30 via-purple-500/20 to-purple-400/30 rounded-full blur-3xl pointer-events-none z-0 opacity-60" />

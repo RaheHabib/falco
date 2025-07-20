@@ -74,7 +74,7 @@ const ProcessComponent = () => {
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
                   <div className="flex items-center justify-center h-40">
-                    <img src="/flow.png" alt="Discovery Flow" className="w-full h-full object-contain" />
+                    <img src="flow.png" alt="Discovery Flow" className="w-full h-full object-contain" />
                   </div>
                 </div>
               </motion.div>
@@ -108,7 +108,7 @@ const ProcessComponent = () => {
                 </div>
                 <div className="bg-gray-800 rounded-2xl p-6 shadow-lg">
                   <div className="flex items-center justify-center h-40 rounded-2xl overflow-hidden">
-                    <img src="/design.png" alt="Design Process" className="w-full h-full object-contain" />
+                    <img src="design.png" alt="Design Process" className="w-full h-full object-contain" />
                   </div>
                 </div>
               </motion.div>

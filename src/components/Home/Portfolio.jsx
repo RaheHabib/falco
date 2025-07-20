@@ -35,7 +35,7 @@ const PortfolioItem = ({ item, index }) => {
       }}
     >
       <div className="mb-4">
-        <img src="/curl.svg" alt="Curl Icon" className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+        <img src="curl.svg" alt="Curl Icon" className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
       </div>
       <div className="mb-6">
         <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors duration-200">
