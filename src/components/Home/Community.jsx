@@ -8,6 +8,8 @@ const Community = () => {
     subject: '',
     description: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   // Refs for elements to animate
   const headerRef = React.useRef(null);
@@ -59,10 +61,41 @@ const Community = () => {
     }));
   };
 
-  const handleSubmitQuestion = () => {
-    console.log('Question submitted:', questionForm);
-    // Handle form submission here
-    setQuestionForm({ subject: '', description: '' });
+  const handleSubmitQuestion = async () => {
+    if (!questionForm.subject.trim() || !questionForm.description.trim()) {
+      setSubmitMessage('Please fill in both fields');
+      setTimeout(() => setSubmitMessage(''), 3000);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      // Create form data for Google Forms
+      const formData = new FormData();
+      formData.append('entry.1856644384', questionForm.subject);
+      formData.append('entry.1014581932', questionForm.description);
+
+      // Submit to Google Forms
+      const response = await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfQDF6gUipO37rqnRF-dqrbgiViNyZtzVUpyYXGrRox7gNzbg/formResponse', {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Forms
+        body: formData
+      });
+
+      // Since we use no-cors mode, we can't read the response
+      // But if we reach this point, the request was sent
+      setSubmitMessage('Question submitted successfully!');
+      setQuestionForm({ subject: '', description: '' });
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitMessage('Error submitting question. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitMessage(''), 5000);
+    }
   };
 
   return (
@@ -147,10 +180,22 @@ const Community = () => {
 
                   <button
                     onClick={handleSubmitQuestion}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors transform hover:scale-105 text-sm sm:text-base"
+                    disabled={isSubmitting}
+                    className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors transform hover:scale-105 text-sm sm:text-base ${
+                      isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                   >
-                    SUBMIT QUESTION
+                    {isSubmitting ? 'SUBMITTING...' : 'SUBMIT QUESTION'}
                   </button>
+
+                  {/* Submit Message */}
+                  {submitMessage && (
+                    <div className={`text-xs sm:text-sm mt-2 ${
+                      submitMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
+                    }`}>
+                      {submitMessage}
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
