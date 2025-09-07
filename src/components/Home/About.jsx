@@ -34,6 +34,17 @@ const About = () => {
     }
   };
 
+  // Function to handle smooth scrolling to contact section
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section className="relative bg-white z-10 overflow-hidden py-10 sm:py-8 md:py-12 lg:py-16">
       {/* Vertical "About us" text - hidden on mobile, responsive positioning */}
@@ -67,7 +78,10 @@ const About = () => {
 
             {/* "Get in touch" button - Fixed positioning */}
             <div className="absolute bottom-[-100px] sm:bottom-[-60px] md:bottom-[-70px] lg:bottom-[-80px] left-0 z-10">
-              <button className="bg-black text-white px-3 py-4 sm:px-4 sm:py-2 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-medium hover:bg-opacity-90 transition-all shadow-lg">
+              <button 
+                onClick={scrollToContact}
+                className="bg-black text-white px-3 py-4 sm:px-4 sm:py-2 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-medium hover:bg-opacity-90 transition-all shadow-lg"
+              >
                 GET IN TOUCH
               </button>
             </div>
@@ -87,9 +101,9 @@ const About = () => {
                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 md:mb-4">
                   We're Falco Solutions
                 </h2>
-                <p className="text-xs sm:text-sm md:text-base leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam leo urna turpis semper sed a vulputate mi.
-                  Diam nisl non in et mattis. Sit pulvinar cursus integer lectus sagittis bibendum. Rhoncus cras diam tellus convallis.
+                <p className="text-xs sm:text-sm italic md:text-base leading-relaxed">
+               " At Falco Solutions LTD, we help businesses transform ideas into impactful digital solutions. From market research to launch and growth, our team specializes in creating cutting-edge applications and websites enhanced with AI integration, blockchain development, and advanced data analytics.
+                We don't just build — we innovate. Our solutions are designed to give you a competitive edge, whether through intelligent insights, seamless user experiences, or optimized SEO strategies that boost visibility and growth."
                 </p>
               </motion.div>
 
@@ -99,8 +113,7 @@ const About = () => {
                 variants={bottomCardVariants}
               >
                 <p className="text-xs sm:text-sm md:text-base leading-relaxed">
-                  Condimentum aliquam arcu arcu massa purus egestas ante vulputate nisl. Nisl tellus non, eu velit mauris, lectus vel, ornare.
-                  Pellentesque in at ac tortor ipsum commodo.
+                  With a future-driven approach, Falco Solutions is your partner in turning vision into reality — 
                 </p>
               </motion.div>
             </motion.div>

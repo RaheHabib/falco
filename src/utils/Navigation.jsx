@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,11 @@ const Navigation = () => {
     { label: "Contact Us", href: "/contact" },
   ];
 
+  const navigate = useNavigate();
+
+  const scrollToContact = () => {
+    navigate("/#contact");
+  };
   return (
     <nav className="absolute top-0 left-0 right-0 z-20 bg-transparent px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16 sm:h-20 md:justify-between">
@@ -55,17 +61,17 @@ const Navigation = () => {
 
           {/* Mobile CTA Button - Right */}
           <div className="sm:hidden">
-            <button className="bg-black text-white px-3 py-1.5 hover:bg-gray-800 transition-colors font-medium text-xs">
+            <button onClick={scrollToContact} className="bg-black text-white px-3 py-1.5 hover:bg-gray-800 transition-colors font-medium text-xs">
               <span className="inline-block w-1.5 h-1.5 bg-red-500 mr-1.5"></span>
-              Hire Us
+              Start a Project
             </button>
           </div>
           
           {/* Tablet CTA Button - Right */}
           <div className="hidden sm:flex md:hidden">
-            <button className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
+            <button onClick={scrollToContact} className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
               <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
-              Hire Us, Now
+              Start a Project
             </button>
           </div>
         </div>
@@ -96,9 +102,9 @@ const Navigation = () => {
 
           {/* Desktop CTA Button - Right */}
           <div className="flex">
-            <button className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-base">
+            <button onClick={scrollToContact} className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-base">
               <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
-              Hire Us, Now
+              Start a Project
             </button>
           </div>
         </div>

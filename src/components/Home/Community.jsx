@@ -24,30 +24,38 @@ const Community = () => {
 
   const faqs = [
     {
-      question: "Lorem ipsum dolor sit amet",
-      answer: "Lorem ipsum dolor sit amet consectetur. Aliquet sed bibendum neque arcu libero phasellus quis tincidunt ac. Sit nulla suspendisse ullamcorper hendrerit ut sit morbi. Nunc urna pellentesque phasellus euismod integer. "
+      question: "What cloud platforms do you specialize in?",
+      answer:
+        "We primarily work with Amazon Web Services (AWS) but also support Azure and Google Cloud depending on project needs. Our team helps with migration, deployment, and optimization to ensure scalability and security."
     },
     {
-      question: "Lorem ipsum dolor sit amet consectetur. Facilisi",
-      answer: "Lorem ipsum dolor sit amet consectetur. Facilisi mauris tempor nunc at dignissim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
+      question: "Do you develop both Android and iOS apps?",
+      answer:
+        "Yes, our mobile app development team builds native apps for Android (Kotlin/Java) and iOS (Swift) as well as cross-platform apps using Flutter and React Native to reduce cost and time."
     },
     {
-      question: "Lorem ipsum dolor sit amet consectetur. Morbi ut malesuada massa nullam scelerisque porttitor ante lacus.",
-      answer: "Lorem ipsum dolor sit amet consectetur. Morbi ut malesuada massa nullam scelerisque porttitor ante lacus. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      question: "Can you help with social media marketing?",
+      answer:
+        "Absolutely! We design and run targeted campaigns on platforms like Facebook, Instagram, and LinkedIn. We also provide content strategy, ad management, and performance tracking to maximize ROI."
     },
     {
-      question: "Consequat faucibus mollis lorem nam. Malesuada tincidunt nulla est id.",
-      answer: "Consequat faucibus mollis lorem nam. Malesuada tincidunt nulla est id. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      question: "Do you offer website performance optimization?",
+      answer:
+        "Yes, we specialize in speed optimization, SEO improvements, and backend scaling. Our goal is to improve both user experience and search engine ranking for your business."
     },
     {
-      question: "Nunc nec scelerisque dictumst vivamus euismod scelerisque mi pellentesque. Consequat pulvinar mi pellentesque scelerisque praesent massa leo bibendum.",
-      answer: "Nunc nec scelerisque dictumst vivamus euismod scelerisque mi pellentesque. Consequat pulvinar mi pellentesque scelerisque praesent massa leo bibendum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      question: "What industries do you work with?",
+      answer:
+        "We have worked with clients in e-commerce, healthcare, education, fintech, and retail. Our solutions are customized to fit your specific industry requirements."
     },
     {
-      question: "Orci neque sed morbi id ut nulla velit quis mi. Neque tortor augue vitae arcu bibendum ut fringilla ac. Arcu pellentesque tortor aliquam nunc.",
-      answer: "Orci neque sed morbi id ut nulla velit quis mi. Neque tortor augue vitae arcu bibendum ut fringilla ac. Arcu pellentesque tortor aliquam nunc. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      question: "How do you ensure data security in cloud projects?",
+      answer:
+        "We follow industry best practices including data encryption, regular security audits, compliance checks, and IAM (Identity and Access Management) policies to safeguard your data."
     }
   ];
+
+
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? -1 : index);
@@ -88,7 +96,7 @@ const Community = () => {
       // But if we reach this point, the request was sent
       setSubmitMessage('Question submitted successfully!');
       setQuestionForm({ subject: '', description: '' });
-      
+
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitMessage('Error submitting question. Please try again.');
@@ -107,7 +115,7 @@ const Community = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="top-20 relative sm:py-16 px-4 sm:px-6 md:px-8 lg:px-16 overflow-hidden mx-auto max-w-5xl">
           {/* Header */}
-          <motion.div 
+          <motion.div
             ref={headerRef}
             className="mb-12 sm:mb-16"
             initial={{ opacity: 0, y: 30 }}
@@ -126,9 +134,9 @@ const Community = () => {
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
-            
+
             {/* Left Section - Illustration and Question Form */}
-            <motion.div 
+            <motion.div
               ref={leftSectionRef}
               className="space-y-6 sm:space-y-8"
               initial={{ opacity: 0, x: -30 }}
@@ -138,10 +146,10 @@ const Community = () => {
               {/* Question Illustration */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative">
-                  <img 
-                    src="question.png" 
-                    alt="Person with questions" 
-                    className="w-80 h-80 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] object-contain" 
+                  <img
+                    src="question.png"
+                    alt="Person with questions"
+                    className="w-80 h-80 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] object-contain"
                   />
                 </div>
               </div>
@@ -181,18 +189,16 @@ const Community = () => {
                   <button
                     onClick={handleSubmitQuestion}
                     disabled={isSubmitting}
-                    className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors transform hover:scale-105 text-sm sm:text-base ${
-                      isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                    className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors transform hover:scale-105 text-sm sm:text-base ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
                   >
                     {isSubmitting ? 'SUBMITTING...' : 'SUBMIT QUESTION'}
                   </button>
 
                   {/* Submit Message */}
                   {submitMessage && (
-                    <div className={`text-xs sm:text-sm mt-2 ${
-                      submitMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
-                    }`}>
+                    <div className={`text-xs sm:text-sm mt-2 ${submitMessage.includes('successfully') ? 'text-green-400' : 'text-red-400'
+                      }`}>
                       {submitMessage}
                     </div>
                   )}
@@ -201,7 +207,7 @@ const Community = () => {
             </motion.div>
 
             {/* Right Section - FAQ List */}
-            <motion.div 
+            <motion.div
               ref={rightSectionRef}
               className="space-y-3 sm:space-y-4"
               initial={{ opacity: 0, x: 30 }}
@@ -209,14 +215,14 @@ const Community = () => {
               transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
             >
               {faqs.map((faq, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   ref={el => faqRefs.current[index] = el}
                   className="bg-black rounded-lg overflow-hidden transform transition-all duration-700 ease-out hover:scale-105"
                   initial={{ opacity: 0, y: 20 }}
                   animate={rightSectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ 
-                    duration: 0.7, 
+                  transition={{
+                    duration: 0.7,
                     delay: 0.6 + index * 0.1,
                     ease: "easeOut"
                   }}
@@ -239,9 +245,8 @@ const Community = () => {
                   </button>
 
                   {/* Answer Content */}
-                  <div className={`overflow-hidden transition-all duration-500 ease-out ${
-                    openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}>
+                  <div className={`overflow-hidden transition-all duration-500 ease-out ${openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
                     <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                       <div className="border-t border-gray-700 pt-3 sm:pt-4">
                         <div className="text-gray-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line">

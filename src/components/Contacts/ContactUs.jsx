@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, Mail } from 'lucide-react';
+import emailjs from 'emailjs-com';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +11,7 @@ const ContactUs = () => {
     phone: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -18,19 +22,63 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
+    setIsSubmitting(true);
+    
+    // Validate form
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error('Please fill in all required fields (Name, Email, and Message)');
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Send email using EmailJS
+    emailjs.send(
+      'service_4swfz4p',     // Replace with your EmailJS service ID
+      'template_qdfkjit',   // Replace with your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        to_email: 'talhaazfar4722@gmail.com'
+      },
+      'M_CTarJqjrkNvsez5'      // Replace with your EmailJS public key
+    )
+    .then((response) => {
+      console.log('SUCCESS!', response.status, response.text);
+      toast.success('Message sent successfully! We will get back to you soon.');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    })
+    .catch((error) => {
+      console.error('FAILED...', error);
+      toast.error('Failed to send message. Please try again later.');
+    })
+    .finally(() => {
+      setIsSubmitting(false);
     });
   };
 
   return (
     <>
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
@@ -62,15 +110,15 @@ const ContactUs = () => {
           animation-delay: 0.8s;
         }
       `}</style>
-      
+
       <div className="min-h-screen py-4 sm:py-6 md:py-8 lg:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
-        {/* Static background glows - removed complex animations */}
+        {/* Static background glows */}
         <div className="absolute left-0 top-20 w-80 h-80 bg-gradient-to-tr from-violet-400/30 via-purple-500/20 to-purple-400/30 rounded-full blur-3xl pointer-events-none z-0 opacity-60" />
         <div className="absolute right-0 top-40 w-80 h-80 bg-gradient-to-tr from-violet-400/30 via-purple-500/20 to-purple-400/30 rounded-full blur-3xl pointer-events-none z-0 opacity-60" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-orange-400/30 via-yellow-300/20 to-yellow-400/30 rounded-full blur-3xl pointer-events-none z-0 opacity-60" />
 
         <div className="max-w-7xl mx-auto relative z-10">
-          {/* Header - Fixed margin issue */}
+          {/* Header */}
           <div className="text-left mt-8 sm:mt-12 md:mt-16 lg:mt-20 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
             <h1 className="text-2xl sm:text-3xl font-light text-gray-800 mb-2 sm:mb-3 md:mb-4 opacity-0 animate-fade-in">
               Contact Us
@@ -85,11 +133,11 @@ const ContactUs = () => {
             <div className="space-y-6 sm:space-y-8 md:space-y-10 opacity-0 animate-slide-up">
               <div className="prose prose-gray max-w-none">
                 <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-                  Contact Falco Solutions today and let's start creating your digital success story. Our team is 
-                  ready to assist you with web design and development services. Whether you have a project 
-                  in mind or simply want to explore how we can help your business thrive online, we're here 
-                  for you. With our expertise and commitment to excellence, we'll bring your vision to life and 
-                  deliver outstanding results. Reach out to us now and let's discuss your next steps towards 
+                  Contact Falco Solutions today and let's start creating your digital success story. Our team is
+                  ready to assist you with web design and development services. Whether you have a project
+                  in mind or simply want to explore how we can help your business thrive online, we're here
+                  for you. With our expertise and commitment to excellence, we'll bring your vision to life and
+                  deliver outstanding results. Reach out to us now and let's discuss your next steps towards
                   a pixel-perfect digital solution.
                 </p>
               </div>
@@ -103,8 +151,12 @@ const ContactUs = () => {
                   <div>
                     <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">Phone Number</h3>
                     <div className="space-y-1">
-                      <p className="text-gray-700 text-base sm:text-lg">+91-7894721848</p>
-                      <p className="text-gray-700 text-base sm:text-lg">+91-889744538</p>
+                      <a
+                        href="tel:+447300846252"
+                        className="text-blue-500 underline text-base sm:text-lg hover:text-blue-600"
+                      >
+                        +44 7300 846252
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -116,7 +168,12 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">Email Address</h3>
-                    <p className="text-gray-700 text-base sm:text-lg">support@falcosolutions.com</p>
+                    <a
+                      href="mailto:admin@falcosolutionsltd.co.uk"
+                      className="text-blue-500 underline  text-base sm:text-lg hover:text-blue-600"
+                    >
+                      admin@falcosolutionsltd.co.uk
+                    </a>
                   </div>
                 </div>
               </div>
@@ -124,14 +181,14 @@ const ContactUs = () => {
 
             {/* Right Side - Contact Form */}
             <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl opacity-0 animate-slide-up-delay">
-              <div className="space-y-4 sm:space-y-6 md:space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 md:space-y-8">
                 <div>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your Name"
+                    placeholder="Your Name *"
                     className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none text-gray-900 placeholder-gray-500 text-base sm:text-lg transition-all duration-200 focus:scale-105"
                     required
                   />
@@ -143,7 +200,7 @@ const ContactUs = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Your Email"
+                    placeholder="Your Email *"
                     className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none text-gray-900 placeholder-gray-500 text-base sm:text-lg transition-all duration-200 focus:scale-105"
                     required
                   />
@@ -157,7 +214,6 @@ const ContactUs = () => {
                     onChange={handleChange}
                     placeholder="Your Phone number"
                     className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none text-gray-900 placeholder-gray-500 text-base sm:text-lg transition-all duration-200 focus:scale-105"
-                    required
                   />
                 </div>
 
@@ -166,7 +222,7 @@ const ContactUs = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Your Message"
+                    placeholder="Your Message *"
                     rows={6}
                     className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none text-gray-900 placeholder-gray-500 text-base sm:text-lg resize-none transition-all duration-200 focus:scale-105"
                     required
@@ -174,12 +230,13 @@ const ContactUs = () => {
                 </div>
 
                 <button
-                  onClick={handleSubmit}
-                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 sm:py-4 px-6 rounded-lg transition-all duration-200 text-base sm:text-lg hover:scale-105 active:scale-95"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 sm:py-4 px-6 rounded-lg transition-all duration-200 text-base sm:text-lg hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>

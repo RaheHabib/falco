@@ -1,35 +1,43 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import smartscout from '../../assets/smartscout.webp';
+import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
+import image from '../../assets/image.png';
+import image2 from '../../assets/image2.png';
 
 const Portfolio = () => {
   const portfolioItems = [
     {
       id: 1,
-      title: "Gift",
+      title: "Smart Scout",
       subtitle: "Mobile App",
       type: "mobile",
-      image: "/api/placeholder/400/300"
+      description: "Smart Scout Mobile is a cross-platform Flutter application that empowers young athletes to build their sports portfolio on-the-go. Players can upload training videos, match highlights, and performance statistics directly from their mobile devices. The app provides seamless connectivity with the web platform, instant notifications for scout interest, and tools to track skill development over time. With its intuitive interface, athletes can maintain their sporting profile anytime, anywhere.",
+      image: smartscout
     },
     {
       id: 2,
-      title: "AMZ",
+      title: "Smart Scout",
       subtitle: "Web Application",
       type: "web",
-      image: "/api/placeholder/400/300"
+      description: "Smart Scout Web is a comprehensive talent showcase platform built with React.js that provides young athletes with a professional space to display their skills, achievements, and sports portfolios. The platform enables scouts and coaches to discover emerging talent through advanced filtering, video highlights, performance metrics, and detailed player profiles. Our full-stack solution features secure authentication, real-time messaging, and a robust admin dashboard for managing recruitment processes.",
+      image: smartscout_web2
     },
     {
       id: 3,
-      title: "AMZ Web",
-      subtitle: "Application",
+      title: "E-commerce",
+      subtitle: "Web Application",
       type: "web",
-      image: "/api/placeholder/400/300"
+      description: "Makhbu is a modern e-commerce website designed to provide a seamless online shopping experience. The platform features a clean and intuitive interface where users can browse products, add items to their cart, and securely complete purchases. It includes essential functionalities such as product search and filtering, category-based browsing, user authentication, and responsive design for both desktop and mobile devices. Makhbu was built with a focus on performance, scalability, and user-friendly navigation, making it a complete solution for online retail.",
+      image: image
     },
     {
       id: 4,
-      title: "Gift",
+      title: "E-commerce",
       subtitle: "Mobile App",
       type: "mobile",
-      image: "/api/placeholder/400/300"
+      description: "This project is a fully functional mobile application developed in Kotlin, designed with a focus on performance, reliability, and a smooth user experience. The app features a modern UI built with Jetpack Compose, providing intuitive navigation and responsiveness across devices. It integrates essential mobile functionalities such as authentication, API connectivity, and real-time data handling, making it scalable and adaptable for different use cases. The project demonstrates strong expertise in Android development, clean architecture, and Kotlin best practices.",
+      image: image2
     }
   ];
 
@@ -87,7 +95,7 @@ const Portfolio = () => {
   };
 
   return (
-    <section className="relative px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 overflow-hidden">
+    <section id='portfolio' className="relative px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 overflow-hidden">
       {/* Animated Background Glows */}
       <motion.div 
         className="absolute bottom-10 right-10 w-60 h-60 sm:w-80 sm:h-80 bg-gradient-to-tr from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-3xl opacity-60 pointer-events-none z-0"
@@ -110,7 +118,7 @@ const Portfolio = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={headerVariants}
         >
-          <div className="lg:max-w-md">
+          <div className="lg:max-w-xl">
             <motion.p 
               className="text-sm font-medium text-orange-600 uppercase tracking-wider mb-2"
               initial={{ opacity: 0, x: -20 }}
@@ -144,13 +152,13 @@ const Portfolio = () => {
               </motion.span>
             </motion.h2>
             <motion.p 
-              className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed"
+              className="text-sm sm:text-base italic lg:text-lg text-gray-600 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit nisl mollis arcu nisl. Ipsum nunc qenean eleifend sed et neque vivamus.
+              "At Falco Solutions LTD, we turn ideas into powerful digital products. Our portfolio reflects a diverse range of projects — from mobile apps to AI-powered platforms, blockchain solutions, and scalable SaaS applications. Each project is built with innovation, performance, and growth in mind, helping businesses launch, scale, and thrive in the digital era."
             </motion.p>
           </div>
         </motion.div>
@@ -211,7 +219,7 @@ const Portfolio = () => {
                 </motion.p>
               </motion.div>
 
-              {/* Project Image/Card */}
+              {/* Project Image */}
               <motion.div 
                 className={`
                   relative aspect-[4/3] rounded-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2
@@ -227,66 +235,32 @@ const Portfolio = () => {
                   transition: { duration: 0.3 }
                 }}
               >
-                {item.type === 'mobile' ? (
-                  // Mobile App Card (Dark)
-                  <motion.div 
-                    className="absolute inset-0 flex items-center justify-center"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                  >
-                    <div className="text-center">
-                      <motion.h4 
-                        className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {item.title}
-                      </motion.h4>
-                      <motion.p 
-                        className="text-gray-300 text-base sm:text-lg"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2, delay: 0.05 }}
-                      >
-                        {item.subtitle}
-                      </motion.p>
-                    </div>
-                  </motion.div>
-                ) : (
-                  // Web Application Card (Light)
-                  <motion.div 
-                    className="absolute inset-0 flex items-center justify-center p-8"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                  >
-                    <div className="text-center">
-                      <motion.h4 
-                        className="text-gray-900 text-xl sm:text-2xl md:text-3xl font-bold mb-2"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {item.title}
-                      </motion.h4>
-                      <motion.p 
-                        className="text-gray-600 text-base sm:text-lg"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2, delay: 0.05 }}
-                      >
-                        {item.subtitle}
-                      </motion.p>
-                    </div>
-                  </motion.div>
+                <img 
+                  src={item.image}
+                  alt={`${item.title} screenshot`}
+                  className="w-full h-full object-center"
+                />
+                
+                {/* Device frame based on type */}
+                {item.type === 'mobile' && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
+                  </div>
                 )}
                 
-                {/* Hover Overlay */}
+                {/* Hover Overlay with Description */}
                 <motion.div 
-                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"
-                  whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                />
+                >
+                  <motion.p 
+                    className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                  >
+                    "{item.description}"
+                  </motion.p>
+                </motion.div>
               </motion.div>
             </motion.div>
           ))}

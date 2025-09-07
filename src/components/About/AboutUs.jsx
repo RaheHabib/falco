@@ -30,8 +30,7 @@ const AboutUs = () => {
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-orange-500 rounded-full mt-3 flex-shrink-0"></div>
                 <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                  We are a group of brilliant & helpful minds and exceptional talents who
-                  promote the value of effective communication and process transparency.
+                 Falco Solutions LTD is a UK-based team of designers, engineers and data specialists. We ship reliable, secure software with clear communication and fast iteration.
                 </p>
               </div>
             </div>
@@ -48,11 +47,7 @@ const AboutUs = () => {
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-orange-500 rounded-full mt-3 flex-shrink-0"></div>
                 <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                  We start by listening to the ideas, issues, requirements, challenges and
-                  objectives. The process continues with an effort to understand the business,
-                  market sector and competitors to develop information which is combined with
-                  our technical knowledge, expertise and research in order to provide the best
-                  solution at the lowest cost.
+                 Discovery → Strategy → Design → Development → Launch → Optimise. We learn your market and users, then deliver scalable solutions with transparent timelines and costs.
                 </p>
               </div>
             </div>

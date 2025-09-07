@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Network, 
-  FileText, 
-  Settings, 
-  PenTool, 
-  ShoppingBag, 
-  Share2, 
-  Package, 
-  Smartphone, 
-  Cpu, 
-  Palette, 
-  Monitor 
-} from 'lucide-react';
+  FiMap, 
+  FiCode, 
+  FiCloud, 
+  FiCpu,
+  FiSearch,
+  FiTrendingUp,
+  FiMail,
+  FiShare2,
+  FiFileText,
+  FiDatabase,
+  FiLayout,
+  FiTool
+} from 'react-icons/fi';
 
-const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false, index }) => {
+const ServiceCard = ({ icon: Icon, title, subtitle, hoverText, isHighlighted = false, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div 
       className={`
-        relative p-4 sm:p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 cursor-pointer max-w-xs mx-auto w-full
+        relative p-4 sm:p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 cursor-pointer max-w-xs mx-auto w-full h-48
         ${isHighlighted 
           ? 'border-black bg-blue-50/50' 
           : 'border-black bg-white hover:border-gray-800'
@@ -36,25 +39,39 @@ const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false, index
         scale: 1.05,
         boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
       }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="flex flex-col items-center text-center space-y-3">
-        <motion.div 
-          className="p-3 rounded-full bg-black"
-          whileHover={{ rotate: 360 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Icon className="w-6 h-6 text-white" />
-        </motion.div>
-        <div>
-          <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight">
-            {title}
-          </h3>
-          {subtitle && (
-            <p className="text-gray-600 text-xs sm:text-sm mt-1 leading-tight">
-              {subtitle}
-            </p>
-          )}
-        </div>
+      <div className="flex flex-col items-center text-center space-y-3 h-full justify-center">
+        {!isHovered ? (
+          <>
+            <motion.div 
+              className="p-3 rounded-full bg-black"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Icon className="w-6 h-6 text-white" />
+            </motion.div>
+            <div>
+              <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight">
+                {title}
+              </h3>
+              {subtitle && (
+                <p className="text-gray-600 text-xs sm:text-sm mt-1 leading-tight">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-gray-700 text-sm p-2"
+          >
+            {hoverText}
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
@@ -63,71 +80,82 @@ const ServiceCard = ({ icon: Icon, title, subtitle, isHighlighted = false, index
 const ServicesComponent = () => {
   const productionServices = [
     {
-      icon: Network,
+      icon: FiMap,
       title: "Product Road Maps &",
-      subtitle: "Scoping"
+      subtitle: "Scoping",
+      hoverText: "Strategic planning and defining product vision, features, and timeline for successful development."
     },
     {
-      icon: FileText,
-      title: "Legal Documentation &",
-      subtitle: "briefs Creation"
+      icon: FiCode,
+      title: "Web & Mobile App",
+      subtitle: "Development",
+      hoverText: "Full-stack development of responsive web applications and native/cross-platform mobile apps."
     },
     {
-      icon: Settings,
-      title: "Content Engineering",
-      subtitle: "& Creation"
+      icon: FiCloud,
+      title: "Cloud Deployment",
+      subtitle: "& DevOps",
+      hoverText: "Seamless deployment to cloud platforms with CI/CD pipelines and infrastructure automation."
     },
     {
-      icon: PenTool,
-      title: "Content Writing & Script Writing",
-      subtitle: "Services"
+      icon: FiCpu,
+      title: "Application Optimization",
+      subtitle: "& AI Integration",
+      hoverText: "Performance enhancement and integration of AI/ML capabilities into existing applications."
     }
   ];
 
   const mediaServices = [
     {
-      icon: ShoppingBag,
-      title: "SEO for",
-      subtitle: "ecommerce"
+      icon: FiSearch,
+      title: "SEO for SaaS",
+      subtitle: "& Digital Product",
+      hoverText: "Comprehensive SEO strategies tailored specifically for SaaS products and digital offerings."
     },
     {
-      icon: Share2,
-      title: "SEO for Affiliate",
-      subtitle: "Marketing"
+      icon: FiTrendingUp,
+      title: "Performance Marketing",
+      subtitle: "(PPC & Ads)",
+      hoverText: "Data-driven paid advertising campaigns across search, social media, and display networks."
     },
     {
-      icon: Package,
-      title: "SEO for B2B",
-      subtitle: "Products"
+      icon: FiMail,
+      title: "Email & Marketing",
+      subtitle: "Automation",
+      hoverText: "End-to-end email marketing solutions with automated workflows and personalized content."
     },
     {
-      icon: Share2,
+      icon: FiShare2,
       title: "Social media",
       subtitle: "Optimization",
-      isHighlighted: false
+      hoverText: "Strategic social media management, content planning, and community engagement."
     }
   ];
 
   const designServices = [
     {
-      icon: Smartphone,
-      title: "Mobile & App",
-      subtitle: "development"
+      icon: FiFileText,
+      title: "Legal Documentation",
+      subtitle: "& Briefs",
+      hoverText: "Preparation of comprehensive legal documents, contracts, and project briefs."
     },
     {
-      icon: Cpu,
-      title: "Application Optimizations and",
-      subtitle: "AI Integration"
+      icon: FiDatabase,
+      title: "Content Engineering",
+      subtitle: "& Knowledge Base",
+      hoverText: "Structured content development and knowledge management systems for better information architecture."
     },
     {
-      icon: Palette,
-      title: "User Interfaces and User Experience",
-      subtitle: "Designs"
+      icon: FiLayout,
+      title: "User Experience Design",
+      subtitle: "(UI/UX) Designs",
+      hoverText: "User-centered design approach creating intuitive interfaces and seamless user experiences."
     },
     {
-      icon: Monitor,
-      title: "Websites and Front end",
-      subtitle: "Development"
+      icon: FiTool,
+      title: "Ongoing Product",
+      subtitle: "Support",
+      hoverText: "Continuous maintenance, updates, and technical support for your digital products."
     }
   ];
 
@@ -180,6 +208,7 @@ const ServicesComponent = () => {
                 icon={service.icon}
                 title={service.title}
                 subtitle={service.subtitle}
+                hoverText={service.hoverText}
                 index={index}
               />
             ))}
@@ -195,7 +224,7 @@ const ServicesComponent = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Media & Marketing Services
+            Growth & Marketing Services
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {mediaServices.map((service, index) => (
@@ -204,6 +233,7 @@ const ServicesComponent = () => {
                 icon={service.icon}
                 title={service.title}
                 subtitle={service.subtitle}
+                hoverText={service.hoverText}
                 isHighlighted={service.isHighlighted}
                 index={index}
               />
@@ -219,7 +249,7 @@ const ServicesComponent = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Design & Development Services
+            Operations & Compliance
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {designServices.map((service, index) => (
@@ -228,6 +258,7 @@ const ServicesComponent = () => {
                 icon={service.icon}
                 title={service.title}
                 subtitle={service.subtitle}
+                hoverText={service.hoverText}
                 index={index}
               />
             ))}

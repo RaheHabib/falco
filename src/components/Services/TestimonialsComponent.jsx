@@ -5,33 +5,37 @@ const TestimonialsComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const testimonials = [
-    {
-      id: 1,
-      quote: "Minimal Disruptions and Smooth Transitioning",
-      content: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using.",
-      author: "Kalvin Ayoga",
-      position: "CEO of the LONDON STOCK EXCHANGE",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      theme: "dark"
-    },
-    {
-      id: 2,
-      quote: "The standard Lorem Ipsum passage",
-      content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical.",
-      author: "Kalvin Ayoga",
-      position: "CEO of the LONDON STOCK EXCHANGE",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      theme: "light"
-    },
-    {
-      id: 3,
-      quote: "Outstanding Results and Professional Service",
-      content: "The team delivered exceptional results that exceeded our expectations. Their attention to detail and commitment to quality made all the difference in our project's success. We couldn't be happier with the outcome.",
-      author: "Kalvin Ayoga",
-      position: "CEO of the LONDON STOCK EXCHANGE",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      theme: "dark"
-    }
+   {
+  id: 1,
+  quote: "Minimal Disruptions and Smooth Transitioning",
+  content:
+    "Falco Solutions made our migration process seamless. Their team ensured minimal downtime and guided us through every step with clear communication.",
+  author: "Saad Ali Ibtisam",
+  position: "Project Manager ",
+  avatar: "https://i.pravatar.cc/150?img=1",
+  theme: "dark",
+},
+{
+  id: 2,
+  quote: "Reliable and Professional",
+  content:
+    "Working with Falco Solutions has been a game-changer for our business. Their e-commerce platform improved our workflow and enhanced customer experience.",
+  author: "Umer",
+  position: "Small Business Owner",
+  avatar: "https://i.pravatar.cc/150?img=2",
+  theme: "dark",
+},
+{
+  id: 3,
+  quote: "Outstanding Results and Professional Service",
+  content:
+    "The team delivered exceptional results that exceeded expectations. From design to deployment, everything was handled with professionalism.",
+  author: "Abdul Rehman",
+  position: "Freelance Entrepreneur",
+  avatar: "https://i.pravatar.cc/150?img=3",
+  theme: "dark",
+}
+
   ];
 
   const nextSlide = () => {

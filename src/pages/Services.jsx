@@ -21,7 +21,7 @@ function Home() {
       <ProcessComponent />
       <Portfolio />
       <TestimonialsComponent />
-      <BlogCardsComponent/>
+      {/* <BlogCardsComponent/> */}
       <ContactSection />
       <Footer />
     </div>
