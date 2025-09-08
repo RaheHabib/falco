@@ -7,6 +7,8 @@ import Contact from './pages/Contact';
 import AdminServices from './pages/admin';
 import NotFound from './pages/NotFound'; // Create this component for 404 pages
 import './index.css';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/terms-and-service" element={<Terms />} />
           
           {/* Admin Route - You could add authentication here later */}
           <Route path="/admin" element={<AdminServices />} />

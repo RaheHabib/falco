@@ -66,8 +66,8 @@ const Footer = () => {
               <li><a href="/" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Home</a></li>
               <li><a href="/about" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">About us</a></li>
               <li><a href="/services" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Services</a></li>
-              {/* <li><a href="/privacy" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Privacy & Policy</a></li>
-              <li><a href="/terms" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Terms of Service</a></li> */}
+              <li><a href="/privacy-policy" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Privacy & Policy</a></li>
+              <li><a href="/terms-and-service" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Terms of Service</a></li>
               <li><a href="/contact" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Contact Us</a></li>
             </ul>
           </div>
@@ -99,10 +99,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <div className="text-gray-600 text-sm leading-relaxed">
-                  Address Line 1, Address Line 2,<br />
-                  Address Line 3, Address Line 4.
-                </div>
+                <a className="text-gray-600  cursor-pointer hover:text-black transition-colors duration-200 text-sm block break-all">
+                  Birmingham, United Kingdom
+                </a>
               </li>
             </ul>
           </div>
