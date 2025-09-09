@@ -288,9 +288,14 @@ const Services = () => {
                     )}
                   </motion.div>
                   <div className="flex flex-col">
-                    <h3 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
-                      Services
-                    </h3>
+                    <div className="flex items-baseline">
+                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
+                       Services
+                      </h2>
+                      <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
+                        WE PROVIDE
+                      </span>
+                    </div>
                     {expandedSection !== 'services' && (
                       <p className="text-xs sm:text-sm text-gray-500 mt-1">
                         From concept to deployment, we offer end-to-end solutions tailored to your business needs.
