@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { app } from "../../firebase";
+
+const db = getFirestore(app);
 
 const Services = () => {
   const [expandedSection, setExpandedSection] = useState(null);
 
-  // Static services data
-  const services = [
-    "Web Development",
-    "Mobile App Development",
-    "UI/UX Design",
-    "Cloud Solutions",
-    "DevOps Services",
-    "Data Analytics"
-  ];
+  // firebase
+  const [services, setServices] = useState([]);
+  const printRef = useRef();
+
+  const fetchServices = async () => {
+    const querySnapshot = await getDocs(collection(db, "services"));
+    const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setServices(data);
+  };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+
 
   // Technology categories with details
   const technologyCategories = {
@@ -44,7 +55,7 @@ const Services = () => {
   };
 
   const contentVariants = {
-    hidden: { 
+    hidden: {
       x: -100,
       opacity: 0
     },
@@ -59,7 +70,7 @@ const Services = () => {
   };
 
   const itemVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       y: 20
     },
@@ -74,7 +85,7 @@ const Services = () => {
   };
 
   const glowVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       scale: 0.8
     },
@@ -89,7 +100,7 @@ const Services = () => {
   };
 
   const serviceVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       x: -20
     },
@@ -104,7 +115,7 @@ const Services = () => {
   };
 
   const expandVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       height: 0
     },
@@ -121,7 +132,7 @@ const Services = () => {
   return (
     <section className="relative px-4 sm:px-6 md:px-8 lg:px-12 pt-10 sm:pt-20 md:pt-24 lg:pt-12 xl:pt-16 pb-8 sm:pb-12 md:pb-16 lg:pb-20 xl:pb-24 overflow-hidden">
       {/* Central Glow Effect */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 flex items-center justify-center"
         variants={glowVariants}
         initial="hidden"
@@ -133,32 +144,31 @@ const Services = () => {
 
       <div className="relative">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-start"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            
+
             {/* Left Section */}
             <motion.div
               className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 lg:ml-12"
               variants={contentVariants}
             >
               {/* Technology Header - Clickable */}
-              <motion.div 
+              <motion.div
                 className="cursor-pointer"
                 onClick={() => toggleSection('technology')}
                 variants={itemVariants}
               >
                 <div className="flex items-center space-x-2 sm:space-x-3">
-                  <motion.div 
-                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
-                      expandedSection === 'technology' 
-                        ? 'bg-red-500 text-white' 
-                        : 'bg-blue-500 text-white'
-                    }`}
+                  <motion.div
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'technology'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-blue-500 text-white'
+                      }`}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -202,11 +212,11 @@ const Services = () => {
                     )}
                   </div>
                 </div>
-                
+
                 {/* Technology Expandable Content */}
                 <AnimatePresence>
                   {expandedSection === 'technology' && (
-                    <motion.div 
+                    <motion.div
                       className="ml-4 sm:ml-12 mt-4 space-y-4 overflow-hidden"
                       variants={expandVariants}
                       initial="hidden"
@@ -223,7 +233,7 @@ const Services = () => {
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {items.map((item, index) => (
-                              <span 
+                              <span
                                 key={index}
                                 className="text-xs sm:text-sm bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full"
                               >
@@ -239,18 +249,17 @@ const Services = () => {
               </motion.div>
 
               {/* Services Section - Clickable */}
-              <motion.div 
+              <motion.div
                 className="cursor-pointer mt-6"
                 onClick={() => toggleSection('services')}
                 variants={itemVariants}
               >
                 <div className="flex items-center space-x-2 sm:space-x-3">
-                  <motion.div 
-                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
-                      expandedSection === 'services' 
-                       ? 'bg-red-500 text-white' 
-                        : 'bg-blue-500 text-white'
-                    }`}
+                  <motion.div
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'services'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-blue-500 text-white'
+                      }`}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -289,11 +298,11 @@ const Services = () => {
                     )}
                   </div>
                 </div>
-                
+
                 {/* Services Expandable Content */}
                 <AnimatePresence>
                   {expandedSection === 'services' && (
-                    <motion.div 
+                    <motion.div
                       className="ml-4 sm:ml-12 mt-4 space-y-2 overflow-hidden"
                       variants={expandVariants}
                       initial="hidden"
@@ -303,20 +312,21 @@ const Services = () => {
                       <p className="text-sm sm:text-base text-gray-600 mb-4">
                         From concept to deployment, we offer end-to-end solutions tailored to your business needs:
                       </p>
-                      {services.map((service, index) => (
-                        <motion.div 
-                          key={index} 
-                          className="text-xs sm:text-sm md:text-lg lg:text-xl text-gray-700 font-medium py-1.5"
-                          variants={serviceVariants}
-                          whileHover={{ 
-                            x: 5,
-                            color: "#3B82F6",
-                            transition: { duration: 0.2 }
-                          }}
-                        >
-                          {service}
-                        </motion.div>
-                      ))}
+                      {/* Services List */}
+                      <div ref={printRef}>
+                        {services.length > 0 ? (
+                          <ul className="list-disc pl-6 space-y-2">
+                            {services.map((service) => (
+                              <li key={service.id} className="text-sm sm:text-base md:text-lg">
+                                {service.name}
+                                {/* <p className="text-gray-600">{service.description}</p> */}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500">No services available.</p>
+                        )}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -324,13 +334,13 @@ const Services = () => {
             </motion.div>
 
             {/* Right Section - SVG Graphic */}
-            <motion.div 
+            <motion.div
               className="flex justify-center lg:justify-end mt-6 lg:mt-0"
               variants={itemVariants}
             >
-              <motion.div 
+              <motion.div
                 className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
                   transition: { duration: 0.3 }
                 }}
