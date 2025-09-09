@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart3, Users, Lightbulb } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   // Animation variants
@@ -157,17 +157,16 @@ const Hero = () => {
                 className="flex flex-col sm:flex-row justify-center gap-5 md:justify-start"
                 variants={itemVariants}
               >
-                <motion.a
-                  href='/contact'
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link to="/contact">
+                <motion.div
                   className="bg-gray-800 hover:bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
                 >
                   Get a free strategy call
-                </motion.a>
+                </motion.div>
+                </Link>
                 <motion.button
                 onClick={handleSeeWork}
                   className="border-2 border-purple-600 hover:bg-gray-900 hover:text-white text-gray-800 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
