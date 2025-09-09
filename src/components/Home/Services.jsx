@@ -1,45 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { app } from "../../firebase";
+
+const db = getFirestore(app);
 
 const Services = () => {
+  const [expandedSection, setExpandedSection] = useState(null);
+
+  // firebase
   const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const printRef = useRef();
+
+  const fetchServices = async () => {
+    const querySnapshot = await getDocs(collection(db, "services"));
+    const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setServices(data);
+  };
 
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        console.log('Fetching services from Firebase...');
-        const snapshot = await getDocs(collection(db, 'services'));
-        
-        if (snapshot.empty) {
-          console.log('No services found in Firebase collection');
-          setServices([]);
-        } else {
-          const list = snapshot.docs.map((doc) => {
-            console.log('Service doc:', doc.id, doc.data());
-            return doc.data().name;
-          });
-          console.log('Fetched services:', list);
-          setServices(list);
-        }
-      } catch (err) {
-        console.error('Error fetching services:', err);
-        setError(err.message);
-        // Fallback to empty array if fetch fails
-        setServices([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchServices();
   }, []);
+
+
+
+  // Technology categories with details
+  const technologyCategories = {
+    "Web & App Frameworks": ["React", "Angular", "Next.js", "Node.js", "Flutter", "React Native"],
+    "AI & Data": ["Python", "TensorFlow", "PyTorch", "Analytics Platforms"],
+    "Blockchain": ["Ethereum", "Solidity", "Web3"],
+    "Cloud & DevOps": ["AWS", "Azure", "Google Cloud", "Docker", "Kubernetes"],
+    "Databases": ["MongoDB", "PostgreSQL", "MySQL", "Firebase"]
+  };
+
+  const toggleSection = (section) => {
+    if (expandedSection === section) {
+      setExpandedSection(null);
+    } else {
+      setExpandedSection(section);
+    }
+  };
 
   // Animation variants
   const containerVariants = {
@@ -54,7 +55,7 @@ const Services = () => {
   };
 
   const contentVariants = {
-    hidden: { 
+    hidden: {
       x: -100,
       opacity: 0
     },
@@ -69,7 +70,7 @@ const Services = () => {
   };
 
   const itemVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       y: 20
     },
@@ -84,7 +85,7 @@ const Services = () => {
   };
 
   const glowVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       scale: 0.8
     },
@@ -99,7 +100,7 @@ const Services = () => {
   };
 
   const serviceVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       x: -20
     },
@@ -113,13 +114,25 @@ const Services = () => {
     }
   };
 
-  // Debug render - you can remove this once everything works
-  console.log('Services component render:', { services, loading, error });
+  const expandVariants = {
+    hidden: {
+      opacity: 0,
+      height: 0
+    },
+    visible: {
+      opacity: 1,
+      height: "auto",
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
     <section className="relative px-4 sm:px-6 md:px-8 lg:px-12 pt-10 sm:pt-20 md:pt-24 lg:pt-12 xl:pt-16 pb-8 sm:pb-12 md:pb-16 lg:pb-20 xl:pb-24 overflow-hidden">
       {/* Central Glow Effect */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 flex items-center justify-center"
         variants={glowVariants}
         initial="hidden"
@@ -131,115 +144,208 @@ const Services = () => {
 
       <div className="relative">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center"
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-start"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            
+
             {/* Left Section */}
             <motion.div
-              className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 lg:ml-48"
+              className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 lg:ml-12"
               variants={contentVariants}
             >
-              {/* Technology Header */}
-              <motion.div 
-                className="flex items-center space-x-2 sm:space-x-3"
+              {/* Technology Header - Clickable */}
+              <motion.div
+                className="cursor-pointer"
+                onClick={() => toggleSection('technology')}
                 variants={itemVariants}
               >
-                <motion.div 
-                  className="w-2 h-2 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gray-400 rounded-full flex-shrink-0"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ duration: 0.2 }}
-                />
-                <div className="flex items-baseline">
-                  <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
-                    Technology
-                  </h2>
-                  <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
-                    WE USE
-                  </span>
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <motion.div
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'technology'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-blue-500 text-white'
+                      }`}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {expandedSection === 'technology' ? (
+                      <motion.svg
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 180 }}
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </motion.svg>
+                    ) : (
+                      <motion.svg
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 0 }}
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </motion.svg>
+                    )}
+                  </motion.div>
+                  <div className="flex flex-col">
+                    <div className="flex items-baseline">
+                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
+                        Technology
+                      </h2>
+                      <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
+                        WE USE
+                      </span>
+                    </div>
+                    {expandedSection !== 'technology' && (
+                      <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                        At Falco Solutions LTD, we combine modern frameworks and intelligent tools to deliver future-ready solutions.
+                      </p>
+                    )}
+                  </div>
                 </div>
+
+                {/* Technology Expandable Content */}
+                <AnimatePresence>
+                  {expandedSection === 'technology' && (
+                    <motion.div
+                      className="ml-4 sm:ml-12 mt-4 space-y-4 overflow-hidden"
+                      variants={expandVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                    >
+                      <p className="text-sm sm:text-base text-gray-600 mb-4">
+                        At Falco Solutions LTD, we combine modern frameworks and intelligent tools to deliver future-ready solutions:
+                      </p>
+                      {Object.entries(technologyCategories).map(([category, items]) => (
+                        <div key={category} className="mb-4">
+                          <h4 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 mb-2">
+                            {category}
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {items.map((item, index) => (
+                              <span
+                                key={index}
+                                className="text-xs sm:text-sm bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
 
-              {/* Services Section */}
-              <motion.div 
-                className="space-y-2 sm:space-y-3 md:space-y-4"
+              {/* Services Section - Clickable */}
+              <motion.div
+                className="cursor-pointer mt-6"
+                onClick={() => toggleSection('services')}
                 variants={itemVariants}
               >
-                <motion.div 
-                  className="flex items-center space-x-2 sm:space-x-3"
-                  variants={itemVariants}
-                >
-                  <motion.div 
-                    className="w-2 h-2 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-blue-400 rounded-full flex-shrink-0"
-                    whileHover={{ scale: 1.2 }}
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <motion.div
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'services'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-blue-500 text-white'
+                      }`}
+                    whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
-                  />
-                  <h3 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
-                    Services
-                  </h3>
-                </motion.div>
-                
-                <motion.div 
-                  className="space-y-1 sm:space-y-2 ml-4 sm:ml-12 md:ml-12"
-                  variants={containerVariants}
-                >
-                  {loading && (
-                    <motion.div 
-                      className="text-xs sm:text-sm md:text-lg lg:text-xl text-gray-500 font-medium"
-                      variants={serviceVariants}
+                  >
+                    {expandedSection === 'services' ? (
+                      <motion.svg
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 180 }}
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </motion.svg>
+                    ) : (
+                      <motion.svg
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 0 }}
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </motion.svg>
+                    )}
+                  </motion.div>
+                  <div className="flex flex-col">
+                    <div className="flex items-baseline">
+                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
+                       Services
+                      </h2>
+                      <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
+                        WE PROVIDE
+                      </span>
+                    </div>
+                    {expandedSection !== 'services' && (
+                      <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                        From concept to deployment, we offer end-to-end solutions tailored to your business needs.
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Services Expandable Content */}
+                <AnimatePresence>
+                  {expandedSection === 'services' && (
+                    <motion.div
+                      className="ml-4 sm:ml-12 mt-4 space-y-2 overflow-hidden"
+                      variants={expandVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
                     >
-                      Loading services...
+                      <p className="text-sm sm:text-base text-gray-600 mb-4">
+                        From concept to deployment, we offer end-to-end solutions tailored to your business needs:
+                      </p>
+                      {/* Services List */}
+                      <div ref={printRef}>
+                        {services.length > 0 ? (
+                          <ul className="list-disc pl-6 space-y-2">
+                            {services.map((service) => (
+                              <li key={service.id} className="text-sm sm:text-base md:text-lg">
+                                {service.name}
+                                <p className="text-gray-600 text-sm">{service.description}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500">No services available.</p>
+                        )}
+                      </div>
                     </motion.div>
                   )}
-                  
-                  {error && (
-                    <motion.div 
-                      className="text-xs sm:text-sm md:text-lg lg:text-xl text-red-500 font-medium"
-                      variants={serviceVariants}
-                    >
-                      Error loading services: {error}
-                    </motion.div>
-                  )}
-                  
-                  {!loading && !error && services.length === 0 && (
-                    <motion.div 
-                      className="text-xs sm:text-sm md:text-lg lg:text-xl text-gray-500 font-medium"
-                      variants={serviceVariants}
-                    >
-                      No services available
-                    </motion.div>
-                  )}
-                  
-                  {!loading && services.length > 0 && services.map((service, index) => (
-                    <motion.div 
-                      key={index} 
-                      className="text-xs sm:text-sm md:text-lg lg:text-xl text-gray-700 font-medium"
-                      variants={serviceVariants}
-                      whileHover={{ 
-                        x: 5,
-                        color: "#3B82F6",
-                        transition: { duration: 0.2 }
-                      }}
-                    >
-                      {service}
-                    </motion.div>
-                  ))}
-                </motion.div>
+                </AnimatePresence>
               </motion.div>
             </motion.div>
 
             {/* Right Section - SVG Graphic */}
-            <motion.div 
+            <motion.div
               className="flex justify-center lg:justify-end mt-6 lg:mt-0"
               variants={itemVariants}
             >
-              <motion.div 
+              <motion.div
                 className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
                   transition: { duration: 0.3 }
                 }}

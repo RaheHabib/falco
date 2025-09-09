@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import emailjs from 'emailjs-com';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -9,6 +12,7 @@ export default function ContactSection() {
     contact: '',
     query: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,14 +24,47 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
     // Basic validation
     if (!formData.name || !formData.email || !formData.query) {
-      alert('Please fill in all required fields (Name, Email, and Query)');
+      toast.error('Please fill in all required fields (Name, Email, and Query)');
+      setIsSubmitting(false);
       return;
     }
     
-    console.log('Form submitted:', formData);
-    alert('Thank you for your inquiry! We\'ll get back to you soon.');
+    // Send email using EmailJS
+    emailjs.send(
+      'service_4swfz4p',     // Replace with your EmailJS service ID
+      'template_qdfkjit',    // Replace with your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        contact_number: formData.contact,
+        message: formData.query,
+        to_email: 'talhaazfar4722@gmail.com'
+      },
+      'M_CTarJqjrkNvsez5'      // Replace with your EmailJS public key
+    )
+    .then((response) => {
+      console.log('SUCCESS!', response.status, response.text);
+      toast.success('Message sent successfully! We will get back to you soon.');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        contact: '',
+        query: ''
+      });
+    })
+    .catch((error) => {
+      console.error('FAILED...', error);
+      toast.error('Failed to send message. Please try again later.');
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   };
 
   // Animation variants
@@ -117,6 +154,18 @@ export default function ContactSection() {
 
   return (
     <div className="relative min-h-screen py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
       {/* Animated Background Glow */}
       <motion.div 
         className="absolute left-0 transform -translate-y-1/2 w-80 h-80 bg-gradient-to-bl from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-3xl opacity-70 pointer-events-none z-0"
@@ -231,16 +280,17 @@ export default function ContactSection() {
               
               <motion.button
                 onClick={handleSubmit}
-                className="w-full md:w-auto px-8 py-4 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+                disabled={isSubmitting}
+                className="w-full md:w-auto px-8 py-4 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
                 variants={itemVariants}
                 whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.3)"
+                  scale: isSubmitting ? 1 : 1.05,
+                  boxShadow: isSubmitting ? "0 8px 25px -8px rgba(0, 0, 0, 0.1)" : "0 10px 30px -10px rgba(0, 0, 0, 0.3)"
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
-                Send Us
+                {isSubmitting ? 'Sending...' : 'Send Us'}
               </motion.button>
             </motion.div>
           </motion.div>
@@ -328,56 +378,6 @@ export default function ContactSection() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Bottom Section */}
-        <motion.div 
-          className="text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={containerVariants}
-        >
-          <motion.p 
-            className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-10"
-            variants={itemVariants}
-          >
-            join over 400+ startup already growing with us.
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-            variants={itemVariants}
-          >
-            <motion.button 
-              className="flex items-center justify-center gap-3 px-8 py-4 bg-white border-2 border-gray-900 text-gray-900 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.2)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <Play className="w-5 h-5" />
-              </motion.div>
-              Watch Demo
-            </motion.button>
-            <motion.button 
-              className="px-8 py-4 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              Get's Started
-            </motion.button>
-          </motion.div>
-        </motion.div>
       </div>
     </div>
   );

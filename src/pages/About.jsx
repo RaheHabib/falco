@@ -15,7 +15,7 @@ function About() {
       <AboutUs />
       <WhyChooseFalco />
       <GroupOfExperts/>
-      <MeetOurTeam />
+      {/* <MeetOurTeam /> */}
       <CustomerTestimonialSection />
       <Footer />
     </div>

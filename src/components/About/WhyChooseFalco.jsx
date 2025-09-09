@@ -79,18 +79,59 @@ const WhyChooseFalco = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             <motion.h2 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 md:mb-8"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 md:mb-3"
               variants={childVariants}
             >
               Why Choose Falco Solutions?
             </motion.h2>
             
             <motion.p 
-              className="text-gray-700 text-base md:text-lg leading-relaxed mb-8 md:mb-10"
+              className="text-gray-700 text-base md:text-lg leading-relaxed mb-3"
               variants={childVariants}
             >
-              Falco Solutions is a team of experienced web designers and developers who are passionate about creating beautiful and effective landing pages. We understand the importance of first impressions, and we know that a well-designed landing page can make all the difference in converting visitors into customers.
+              We combine product thinking with senior engineering to deliver measurable results.
             </motion.p>
+            
+            <motion.ul 
+              className="text-gray-700 text-base md:text-lg mb-8 md:mb-3 space-y-2"
+              variants={childVariants}
+            >
+              <motion.li 
+                className="flex items-start"
+                variants={childVariants}
+              >
+                <span className="text-orange-500 mr-2 mt-1">•</span>
+                <span><strong>End-to-end delivery:</strong> research, design, web & mobile dev, AI, blockchain, SEO.</span>
+              </motion.li>
+              <motion.li 
+                className="flex items-start"
+                variants={childVariants}
+              >
+                <span className="text-orange-500 mr-2 mt-1">•</span>
+                <span><strong>Conversion-first:</strong> analytics and experimentation drive decisions.</span>
+              </motion.li>
+              <motion.li 
+                className="flex items-start"
+                variants={childVariants}
+              >
+                <span className="text-orange-500 mr-2 mt-1">•</span>
+                <span><strong>Modern stack:</strong> React/Next.js, Node/Python, Flutter, Solidity/Web3, AWS/Azure/GCP.</span>
+              </motion.li>
+              <motion.li 
+                className="flex items-start"
+                variants={childVariants}
+              >
+                <span className="text-orange-500 mr-2 mt-1">•</span>
+                <span><strong>Security & scale:</strong> code reviews, testing, CI/CD and cloud best practice.</span>
+              </motion.li>
+              <motion.li 
+                className="flex items-start"
+                variants={childVariants}
+              >
+                <span className="text-orange-500 mr-2 mt-1">•</span>
+                <span><strong>Post-launch growth:</strong> monitoring, A/B testing and continuous SEO.</span>
+              </motion.li>
+            </motion.ul>
             
             <motion.div 
               className="flex justify-center md:justify-start"
@@ -105,7 +146,7 @@ const WhyChooseFalco = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
-                Know us more
+                LEARN MORE
               </motion.button>
             </motion.div>
           </motion.div>

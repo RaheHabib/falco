@@ -3,6 +3,15 @@ import Navigation from '@utils/Navigation';
 import StreamingText from '@utils/StreamingText';
 
 const ServicesHero = () => {
+   const scrollToPortfolio = () => {
+    const contactSection = document.getElementById('portfolio');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 overflow-hidden">
       {/* Background glow effect */}
@@ -71,7 +80,7 @@ const ServicesHero = () => {
             </h1>
             
             <div className="mt-8 sm:mt-12 md:mt-16">
-              <button className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 sm:py-4 sm:px-10 md:py-5 md:px-12 rounded-lg text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button onClick={scrollToPortfolio} className="bg-black hover:bg-gray-900 text-white font-semibold py-3 px-8 sm:py-4 sm:px-10 md:py-5 md:px-12 rounded-lg text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 See Our Previous Work
               </button>
             </div>

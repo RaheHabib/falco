@@ -88,7 +88,7 @@ const ProcessComponent = () => {
                 <div className="text-left">
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Discover</h3>
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-md">
-                    Every project starts with understanding the challenge and the landscape...
+                    Every project starts with understanding the challenge and the landscape
                   </p>
                 </div>
               </motion.div>
@@ -122,7 +122,7 @@ const ProcessComponent = () => {
                 <div className="text-left lg:text-right">
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Design</h3>
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-md lg:ml-auto">
-                    ...allowing us to design a solution that meets your needs...
+                    allowing us to design a solution that meets your needs
                   </p>
                 </div>
               </motion.div>
@@ -169,7 +169,7 @@ const ProcessComponent = () => {
                 <div className="text-left">
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Develop</h3>
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-md">
-                    ...keeping development quality high and costs low...
+                    keeping development quality high and costs low
                   </p>
                 </div>
               </motion.div>
@@ -206,7 +206,7 @@ const ProcessComponent = () => {
                 <div className="text-left lg:text-right">
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Deliver</h3>
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-md lg:ml-auto">
-                    ...resulting in a tailored solution that provides you value.
+                    resulting in a tailored solution that provides you value.
                   </p>
                 </div>
               </motion.div>

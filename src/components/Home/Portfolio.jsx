@@ -1,121 +1,290 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import CountUp from 'react-countup';
+import smartscout from '../../assets/smartscout.webp';
+import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
+import image from '../../assets/image.png';
+import image2 from '../../assets/image2.png';
 import WorkWithUs from './WorkWithUs';
-
-// Optimized Portfolio Item Component
-const PortfolioItem = ({ item, index }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const isLeft = index % 2 === 0;
-
-  return (
-    <motion.div
-      ref={ref}
-      className={`
-        group cursor-pointer transition-all duration-700 ease-out transform
-        ${index === 0 || index === 3 ? 'md:mt-0' : 'md:mt-8 lg:mt-16'}
-      `}
-      initial={{ 
-        x: isLeft ? -100 : 100,
-        opacity: 0 
-      }}
-      animate={isInView ? { 
-        x: 0, 
-        opacity: 1 
-      } : { 
-        x: isLeft ? -100 : 100, 
-        opacity: 0 
-      }}
-      transition={{ 
-        duration: 0.7, 
-        ease: "easeOut",
-        delay: index * 0.1
-      }}
-    >
-      <div className="mb-4">
-        <img src="curl.svg" alt="Curl Icon" className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-      </div>
-      <div className="mb-6">
-        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors duration-200">
-          {item.title}
-        </h3>
-        <p className="text-lg sm:text-xl text-gray-600">{item.subtitle}</p>
-      </div>
-      <div
-        className={`
-          relative aspect-[4/3] rounded-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2
-          ${item.type === 'mobile' ? 'bg-black' : 'bg-gray-100'}
-        `}
-      >
-        {item.type === 'mobile' ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <h4 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2">{item.title}</h4>
-              <p className="text-gray-300 text-base sm:text-lg">{item.subtitle}</p>
-            </div>
-          </div>
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
-            <div className="text-center">
-              <h4 className="text-gray-900 text-xl sm:text-2xl md:text-3xl font-bold mb-2">{item.title}</h4>
-              <p className="text-gray-600 text-base sm:text-lg">{item.subtitle}</p>
-            </div>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
-      </div>
-    </motion.div>
-  );
-};
+import CountUp from 'react-countup';
+import { useLocation } from 'react-router-dom';
 
 const Portfolio = () => {
   const statsRef = React.useRef(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-50px" });
-
   const portfolioItems = [
-    { id: 1, title: "Gift", subtitle: "Mobile App", type: "mobile" },
-    { id: 2, title: "AMZ", subtitle: "Web Application", type: "web" },
-    { id: 3, title: "AMZ Web", subtitle: "Application", type: "web" },
-    { id: 4, title: "Gift", subtitle: "Mobile App", type: "mobile" },
+    {
+      id: 1,
+      title: "Smart Scout",
+      subtitle: "Mobile App",
+      type: "mobile",
+      description: "Smart Scout Mobile is a cross-platform Flutter application that empowers young athletes to build their sports portfolio on-the-go. Players can upload training videos, match highlights, and performance statistics directly from their mobile devices. The app provides seamless connectivity with the web platform, instant notifications for scout interest, and tools to track skill development over time. With its intuitive interface, athletes can maintain their sporting profile anytime, anywhere.",
+      image: smartscout
+    },
+    {
+      id: 2,
+      title: "Smart Scout",
+      subtitle: "Web Application",
+      type: "web",
+      description: "Smart Scout Web is a comprehensive talent showcase platform built with React.js that provides young athletes with a professional space to display their skills, achievements, and sports portfolios. The platform enables scouts and coaches to discover emerging talent through advanced filtering, video highlights, performance metrics, and detailed player profiles. Our full-stack solution features secure authentication, real-time messaging, and a robust admin dashboard for managing recruitment processes.",
+      image: smartscout_web2
+    },
+    {
+      id: 3,
+      title: "E-commerce",
+      subtitle: "Web Application",
+      type: "web",
+      description: "Makhbu is a modern e-commerce website designed to provide a seamless online shopping experience. The platform features a clean and intuitive interface where users can browse products, add items to their cart, and securely complete purchases. It includes essential functionalities such as product search and filtering, category-based browsing, user authentication, and responsive design for both desktop and mobile devices. Makhbu was built with a focus on performance, scalability, and user-friendly navigation, making it a complete solution for online retail.",
+      image: image
+    },
+    {
+      id: 4,
+      title: "E-commerce",
+      subtitle: "Mobile App",
+      type: "mobile",
+      description: "This project is a fully functional mobile application developed in Kotlin, designed with a focus on performance, reliability, and a smooth user experience. The app features a modern UI built with Jetpack Compose, providing intuitive navigation and responsiveness across devices. It integrates essential mobile functionalities such as authentication, API connectivity, and real-time data handling, making it scalable and adaptable for different use cases. The project demonstrates strong expertise in Android development, clean architecture, and Kotlin best practices.",
+      image: image2
+    }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const glowVariants = {
+    animate: {
+      scale: [1, 1.1, 1],
+      opacity: [0.6, 0.8, 0.6],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 overflow-hidden">
+    <section id='work' className="relative px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 overflow-hidden">
+      {/* Animated Background Glows */}
       <div className="absolute top-20 left-0 w-40 h-40 sm:w-60 sm:h-60 bg-gradient-to-br from-purple-700/60 via-indigo-700/50 to-blue-700/50 rounded-full blur-3xl opacity-70 pointer-events-none z-0"></div>
       <div className="absolute bottom-10 right-10 w-60 h-60 sm:w-80 sm:h-80 bg-gradient-to-tr from-pink-700/50 via-purple-700/50 to-blue-700/50 rounded-full blur-3xl opacity-60 pointer-events-none z-0"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-br from-blue-500/40 via-purple-600/40 to-pink-500/40 rounded-full blur-[120px] opacity-60 pointer-events-none z-0"></div>
+      <motion.div
+        className="absolute bottom-10 right-10 w-60 h-60 sm:w-80 sm:h-80 bg-gradient-to-tr from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-3xl opacity-60 pointer-events-none z-0"
+        variants={glowVariants}
+        animate="animate"
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-br from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-[120px] opacity-60 pointer-events-none z-0"
+        variants={glowVariants}
+        animate="animate"
+        style={{ animationDelay: '2s' }}
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-12 sm:mb-16">
-          <div className="lg:max-w-md">
-            <p className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wider mb-2">OUR WORK</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
+        {/* Header Section */}
+        <motion.div
+          className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerVariants}
+        >
+          <div className="lg:max-w-xl">
+            <motion.p
+              className="text-sm font-medium text-gray-700 uppercase tracking-wider mb-2"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              OUR WORK
+            </motion.p>
+            <motion.h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Portfo
-              <span className="inline-block bg-gray-700 text-white px-1 py-1 sm:px-2 sm:py-1 rounded-md transform -rotate-2">lio</span>
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit nisl mollis arcu nisl. Ipsum nunc qenean eleifend sed et neque vivamus.
-            </p>
+              <motion.span
+                className="inline-block bg-gray-700 text-white px-1 py-1 sm:px-2 sm:py-1 rounded-md transform -rotate-2"
+                initial={{ rotate: -2, scale: 0.8 }}
+                whileInView={{ rotate: -2, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
+                whileHover={{
+                  rotate: 2,
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                lio
+              </motion.span>
+            </motion.h2>
+            <motion.p
+              className="text-sm sm:text-base italic lg:text-lg text-gray-600 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              "At Falco Solutions LTD, we turn ideas into powerful digital products. Our portfolio reflects a diverse range of projects — from mobile apps to AI-powered platforms, blockchain solutions, and scalable SaaS applications. Each project is built with innovation, performance, and growth in mind, helping businesses launch, scale, and thrive in the digital era."
+            </motion.p>
           </div>
-          <div className="mt-6 lg:mt-0">
-            <button className="bg-black text-white px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-medium hover:bg-gray-800 transition-colors duration-200 flex items-center group">
-              VIEW WORK
-              <svg className="ml-2 w-3 h-3 sm:w-4 sm:h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
+        </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+        {/* Portfolio Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={containerVariants}
+        >
           {portfolioItems.map((item, index) => (
-            <PortfolioItem key={item.id} item={item} index={index} />
-          ))}
-        </div>
+            <motion.div
+              key={item.id}
+              className={`group cursor-pointer ${index === 0 || index === 3 ? 'md:mt-0' : 'md:mt-16'
+                }`}
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {/* Decorative Wave Icon */}
+              <motion.div
+                className="mb-4"
+                initial={{ opacity: 0, rotate: -45 }}
+                whileInView={{ opacity: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <img src="curl.svg" alt="Curl Icon" className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+              </motion.div>
 
+              {/* Project Title */}
+              <motion.div
+                className="mb-6"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
+              >
+                <motion.h3
+                  className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors duration-200"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {item.title}
+                </motion.h3>
+                <motion.p
+                  className="text-lg sm:text-xl text-gray-600"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2, delay: 0.1 }}
+                >
+                  {item.subtitle}
+                </motion.p>
+              </motion.div>
+
+              {/* Project Image */}
+              <motion.div
+                className={`
+                  relative aspect-[4/3] rounded-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2
+                  ${item.type === 'mobile' ? 'bg-black' : 'bg-gray-100'}
+                `}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
+                whileHover={{
+                  y: -8,
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt={`${item.title} screenshot`}
+                  className="w-full h-full object-center"
+                />
+
+                {/* Device frame based on type */}
+                {item.type === 'mobile' && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
+                  </div>
+                )}
+
+                {/* Hover Overlay with Description */}
+                <motion.div
+                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.p
+                    className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                  >
+                    "{item.description}"
+                  </motion.p>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+       <div className="max-w-7xl mx-auto relative z-10">
+       
         {/* Stats Section */}
         <motion.div 
           ref={statsRef} 
@@ -167,7 +336,9 @@ const Portfolio = () => {
           </div>
         </motion.div>
       </div>
+      </div>
       <WorkWithUs />
+
     </section>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import ceo from '../../assets/ceo.jpg';
 
 const GroupOfExperts = () => {
   return (
@@ -30,7 +31,7 @@ const GroupOfExperts = () => {
               {/* CEO Image */}
               <div className="flex-shrink-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                  src={ceo}
                   alt="Abdul Moiz, CEO of Falco Solutions" 
                   className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 object-cover rounded-2xl shadow-lg"
                 />

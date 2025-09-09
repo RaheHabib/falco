@@ -1,4 +1,14 @@
 export default function GlowingCTASection() {
+  // Function to handle smooth scrolling to contact section
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-full max-w-4xl">
@@ -30,7 +40,7 @@ export default function GlowingCTASection() {
                 </p>
                 
                 {/* Simple CTA Button */}
-                <button className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 font-medium text-lg transition-colors duration-300 flex items-center gap-3 mx-auto">
+                <button  onClick={scrollToContact} className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 font-medium text-lg transition-colors duration-300 flex items-center gap-3 mx-auto">
                   GET IN TOUCH
                   <svg 
                     className="w-5 h-5" 
