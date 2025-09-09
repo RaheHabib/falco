@@ -324,7 +324,7 @@ const Services = () => {
                             {services.map((service) => (
                               <li key={service.id} className="text-sm sm:text-base md:text-lg">
                                 {service.name}
-                                {/* <p className="text-gray-600">{service.description}</p> */}
+                                <p className="text-gray-600 text-sm">{service.description}</p>
                               </li>
                             ))}
                           </ul>

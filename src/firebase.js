@@ -1,16 +1,21 @@
-// firebase.js
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAan1JkD10OLfw6168BGeb6fJOVmhEozO0",
-  authDomain: "falco-solution-66833.firebaseapp.com",
-  projectId: "falco-solution-66833",
-  storageBucket: "falco-solution-66833.firebasestorage.app",
-  messagingSenderId: "485073891172",
-  appId: "1:485073891172:web:54b37f9760a26545ba9471",
-  measurementId: "G-T32K9QWX2F"
+  apiKey: "AIzaSyDBC_1eujh82IvdYQ1XYPkTY3ngCb6hLMQ",
+  authDomain: "falco-solutions.firebaseapp.com",
+  projectId: "falco-solutions",
+  storageBucket: "falco-solutions.firebasestorage.app",
+  messagingSenderId: "76566213203",
+  appId: "1:76566213203:web:9b5b8648130e407a3f4ca6",
+  measurementId: "G-7PEY4PNF6Z"
 };
 
+// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
