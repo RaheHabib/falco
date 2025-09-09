@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import Home from '@pages/Home';
 import Services from '@pages/Services';

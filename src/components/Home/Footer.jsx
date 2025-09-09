@@ -1,5 +1,6 @@
 import { Linkedin, Youtube, Instagram } from 'lucide-react';
 import logo from '../../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -63,12 +64,12 @@ const Footer = () => {
           <div className="space-y-6 flex flex-col items-center sm:items-start text-center sm:text-left">
             <h4 className="font-semibold text-black">Useful Links</h4>
             <ul className="space-y-3">
-              <li><a href="/" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Home</a></li>
-              <li><a href="/about" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">About us</a></li>
-              <li><a href="/services" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Services</a></li>
-              <li><a href="/privacy-policy" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Privacy & Policy</a></li>
-              <li><a href="/terms-and-service" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Terms of Service</a></li>
-              <li><a href="/contact" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Contact Us</a></li>
+              <li><Link to="/" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Home</Link></li>
+              <li><Link to="/about" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">About us</Link></li>
+              <li><Link to="/services" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Services</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Privacy & Policy</Link></li>
+              <li><Link to="/terms-and-service" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Terms of Service</Link></li>
+              <li><Link to="/contact" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block">Contact Us</Link></li>
             </ul>
           </div>
 

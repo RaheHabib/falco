@@ -67,8 +67,8 @@ const About = () => {
           {/* Image container with proper height */}
           <div className="relative min-h-[40vh] sm:min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] mb-16 sm:mb-20 md:mb-24 lg:mb-32">
             {/* Background image */}
-            <img
-              src="/aboutbg.png"
+          <img
+              src="aboutbg.png"
               alt="Office building interior"
               className="absolute inset-0 w-full h-full object-cover rounded-tl-[20px] sm:rounded-tl-[30px] md:rounded-tl-[40px] lg:rounded-tl-[60px] xl:rounded-tl-[90px] rounded-tr-[8px] sm:rounded-tr-[10px] rounded-bl-[8px] sm:rounded-bl-[10px] rounded-br-[8px] sm:rounded-br-[10px]"
             />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,11 +52,13 @@ const Navigation = () => {
 
           {/* Mobile Logo - Center */}
           <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-            <img
-              src="/logo.png"
-              alt="Falco Logo"
-              className="h-full w-full mt-72 sm:h-12 sm:w-12"
-            />
+              <Link to="/">
+              <img
+                src="logo.png"
+                alt="Falco Logo"
+                className="h-full w-full mt-72 sm:h-12 sm:w-12"
+              />
+            </Link>
           </div>
 
           {/* Mobile CTA Button - Right */}
@@ -80,23 +82,25 @@ const Navigation = () => {
         <div className="hidden md:flex items-center justify-between w-full h-full">
           {/* Desktop Logo - Left */}
           <div className="flex-shrink-0">
-            <img
-              src="/logo.png"
-              alt="Falco Logo"
-              className="h-20 w-20 lg:h-32 lg:w-32 xl:h-40 xl:w-40 mt-4"
-            />
+            <Link to="/">
+              <img
+                src="logo.png"
+                alt="Falco Logo"
+                className="h-20 w-20 lg:h-32 lg:w-32 xl:h-40 xl:w-40 mt-4"
+              />
+            </Link>
           </div>
 
           {/* Desktop Nav - Center */}
           <div className="flex space-x-8">
             {navLinks.map((link, i) => (
-              <a
+             <Link
                 key={i}
-                href={link.href}
+                to={link.href}
                 className="text-gray-700 hover:text-gray-900 transition-colors font-medium"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -114,17 +118,18 @@ const Navigation = () => {
       {isOpen && (
         <div className="md:hidden mt-2 space-y-2 px-2 pb-4 bg-white rounded-lg shadow-md z-50 relative">
           {navLinks.map((link, i) => (
-            <a
+            <Link
               key={i}
-              href={link.href}
+              to={link.href}
               className="block text-gray-700 hover:text-gray-900 transition-colors font-medium py-2"
+              onClick={() => setIsOpen(false)} // Close menu when clicking a link
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <button className="w-full bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
+          <button onClick={scrollToContact} className="w-full bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors font-medium text-sm">
             <span className="inline-block w-2 h-2 bg-red-500 mr-2"></span>
-            Hire Us, Now
+            Start a Project
           </button>
         </div>
       )}

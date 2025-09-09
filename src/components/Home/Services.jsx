@@ -351,7 +351,7 @@ const Services = () => {
                 }}
               >
                 <img
-                  src="/Services shape.svg"
+                  src="Services shape.svg"
                   alt="Technology Services Graphic"
                   className="w-full h-auto"
                 />

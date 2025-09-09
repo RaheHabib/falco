@@ -7,7 +7,7 @@ const WorkWithUs = () => {
       title: "Enterprises",
       description: "Offering innovative digitization services for big, medium-sized and small businesses. We deliver state-of-the-art solutions that accelerate innovation for micro, medium-sized and large businesses and help them take a new approach to how they conduct their business in the digital age.",
       services: ["BRANDING", "DEVELOPMENT", "UI/UX"],
-      graphic: "/sme-graphic.png", // Your SME colorful graphic
+      graphic: "sme-graphic.png", // Your SME colorful graphic
       bgColor: "bg-gray-900"
     },
     {
@@ -15,7 +15,7 @@ const WorkWithUs = () => {
       title: "Startups",
       description: "Enabling start-ups with Internet, Cloud, Mobile and IoT platforms to accelerate their development. We have comprehensive technological expertise and experience to facilitate the start-up growth path at each stage - from the initial Seed phase to the eventual expansion level.",
       services: ["BRANDING", "DEVELOPMENT", "UI/UX"],
-      graphic: "/startup-graphic.png", // Your startup colorful graphic
+      graphic: "startup-graphic.png", // Your startup colorful graphic
       bgColor: "bg-gray-900"
     },
     {
@@ -23,7 +23,7 @@ const WorkWithUs = () => {
       title: "Agencies",
       description: "Empowering companies, independent software vendors and consulting firms. As their online distribution to assist agencies and allow them to successfully manage the programs of their company. We are increasing their bottom line or taking full responsibility for their projects",
       services: ["BRANDING", "DEVELOPMENT", "UI/UX"],
-      graphic: "/agencies-graphic.png", // Your agencies colorful graphic
+      graphic: "agencies-graphic.png", // Your agencies colorful graphic
       bgColor: "bg-gray-900"
     }
   ];

@@ -72,7 +72,7 @@ const TestimonialSection = () => {
         style={{ transform: 'translate3d(0, 0, 0)' }}
       >
         <img
-          src="/quotes.svg"
+          src="quotes.svg"
           alt="Decorative quotes"
           className="w-full h-full object-contain"
           loading="lazy"
