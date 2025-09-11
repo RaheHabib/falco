@@ -25,46 +25,47 @@ export default function ContactSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Basic validation
     if (!formData.name || !formData.email || !formData.query) {
       toast.error('Please fill in all required fields (Name, Email, and Query)');
       setIsSubmitting(false);
       return;
     }
-    
+
     // Send email using EmailJS
     emailjs.send(
-      'service_4swfz4p',     // Replace with your EmailJS service ID
-      'template_qdfkjit',    // Replace with your EmailJS template ID
+      'service_60aypz2',
+      'template_4uv9ykv',    // Replace with your EmailJS template ID
       {
         from_name: formData.name,
         from_email: formData.email,
-        contact_number: formData.contact,
+        phone: formData.contact,
         message: formData.query,
-        to_email: 'talhaazfar4722@gmail.com'
+        to_email: 'admin@falcosolutions.co.uk'
+
       },
-      'M_CTarJqjrkNvsez5'      // Replace with your EmailJS public key
+      'c1AuQSNO4h6HbHjrT'     // Replace with your EmailJS public key
     )
-    .then((response) => {
-      console.log('SUCCESS!', response.status, response.text);
-      toast.success('Message sent successfully! We will get back to you soon.');
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        contact: '',
-        query: ''
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        toast.success('Message sent successfully! We will get back to you soon.');
+
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          contact: '',
+          query: ''
+        });
+      })
+      .catch((error) => {
+        console.error('FAILED...', error);
+        toast.error('Failed to send message. Please try again later.');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-    })
-    .catch((error) => {
-      console.error('FAILED...', error);
-      toast.error('Failed to send message. Please try again later.');
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    });
   };
 
   // Animation variants
@@ -80,8 +81,8 @@ export default function ContactSection() {
   };
 
   const itemVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 30,
       scale: 0.95
     },
@@ -154,7 +155,7 @@ export default function ContactSection() {
 
   return (
     <div className="relative min-h-screen py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -165,24 +166,24 @@ export default function ContactSection() {
         draggable
         pauseOnHover
       />
-      
+
       {/* Animated Background Glow */}
-      <motion.div 
+      <motion.div
         className="absolute left-0 transform -translate-y-1/2 w-80 h-80 bg-gradient-to-bl from-orange-400/30 via-orange-500/20 to-yellow-400/30 rounded-full blur-3xl opacity-70 pointer-events-none z-0"
         style={{ top: "20rem" }}
         animate={pulseAnimation}
       />
-      
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={headerVariants}
         >
-          <motion.h1 
+          <motion.h1
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -191,7 +192,7 @@ export default function ContactSection() {
           >
             If you've made it this far down the page,
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -205,18 +206,18 @@ export default function ContactSection() {
         {/* Main Content - Form and Graphic */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
           {/* Left Side - Form */}
-          <motion.div 
+          <motion.div
             className="order-2 lg:order-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={formVariants}
           >
-            <motion.div 
+            <motion.div
               className="space-y-6"
               variants={containerVariants}
             >
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 gap-4"
                 variants={itemVariants}
               >
@@ -227,7 +228,7 @@ export default function ContactSection() {
                   value={formData.name}
                   onChange={handleInputChange}
                   className="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all duration-300"
-                  whileFocus={{ 
+                  whileFocus={{
                     scale: 1.02,
                     boxShadow: "0 8px 25px -8px rgba(0, 0, 0, 0.1)"
                   }}
@@ -240,14 +241,14 @@ export default function ContactSection() {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all duration-300"
-                  whileFocus={{ 
+                  whileFocus={{
                     scale: 1.02,
                     boxShadow: "0 8px 25px -8px rgba(0, 0, 0, 0.1)"
                   }}
                   transition={{ duration: 0.2 }}
                 />
               </motion.div>
-              
+
               <motion.input
                 type="tel"
                 name="contact"
@@ -256,13 +257,13 @@ export default function ContactSection() {
                 onChange={handleInputChange}
                 className="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all duration-300"
                 variants={itemVariants}
-                whileFocus={{ 
+                whileFocus={{
                   scale: 1.02,
                   boxShadow: "0 8px 25px -8px rgba(0, 0, 0, 0.1)"
                 }}
                 transition={{ duration: 0.2 }}
               />
-              
+
               <motion.textarea
                 name="query"
                 placeholder="Query*"
@@ -271,19 +272,19 @@ export default function ContactSection() {
                 rows={6}
                 className="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition-all duration-300 resize-none"
                 variants={itemVariants}
-                whileFocus={{ 
+                whileFocus={{
                   scale: 1.02,
                   boxShadow: "0 8px 25px -8px rgba(0, 0, 0, 0.1)"
                 }}
                 transition={{ duration: 0.2 }}
               />
-              
+
               <motion.button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
                 className="w-full md:w-auto px-8 py-4 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
                 variants={itemVariants}
-                whileHover={{ 
+                whileHover={{
                   scale: isSubmitting ? 1 : 1.05,
                   boxShadow: isSubmitting ? "0 8px 25px -8px rgba(0, 0, 0, 0.1)" : "0 10px 30px -10px rgba(0, 0, 0, 0.3)"
                 }}
@@ -296,19 +297,19 @@ export default function ContactSection() {
           </motion.div>
 
           {/* Right Side - Double Capsule Graphic */}
-          <motion.div 
+          <motion.div
             className="order-1 lg:order-2 flex justify-center lg:justify-end overflow-hidden"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={graphicVariants}
           >
-            <motion.div 
+            <motion.div
               className="relative mx-8"
               animate={floatingAnimation}
             >
               {/* Large outer capsule */}
-              <motion.div 
+              <motion.div
                 className="w-80 h-80 md:w-96 md:h-96 lg:w-[450px] lg:h-[450px] bg-gradient-to-br from-gray-200 to-gray-300 rounded-full opacity-60 flex items-center justify-center"
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0.6 }}
@@ -317,7 +318,7 @@ export default function ContactSection() {
                 whileHover={{ scale: 1.05 }}
               >
                 {/* Inner capsule */}
-                <motion.div 
+                <motion.div
                   className="w-48 h-48 md:w-60 md:h-60 lg:w-72 lg:h-72 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full opacity-80 flex items-center justify-center"
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 0.8 }}
@@ -326,7 +327,7 @@ export default function ContactSection() {
                   whileHover={{ scale: 1.1 }}
                 >
                   {/* Innermost element */}
-                  <motion.div 
+                  <motion.div
                     className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gray-500 rounded-full opacity-60"
                     initial={{ scale: 0.8, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 0.6 }}
@@ -343,9 +344,9 @@ export default function ContactSection() {
                   />
                 </motion.div>
               </motion.div>
-              
+
               {/* Additional decorative elements */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-8 -right-8 w-16 h-16 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full opacity-40"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0.4 }}
@@ -360,7 +361,7 @@ export default function ContactSection() {
                   }
                 }}
               />
-              <motion.div 
+              <motion.div
                 className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full opacity-40"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 0.4 }}

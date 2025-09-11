@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { collection, getDocs } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "../../firebase";
 
 const db = getFirestore(app);
 
 const Services = () => {
   const [expandedSection, setExpandedSection] = useState(null);
-
-  // firebase
   const [services, setServices] = useState([]);
   const printRef = useRef();
 
@@ -23,9 +20,6 @@ const Services = () => {
     fetchServices();
   }, []);
 
-
-
-  // Technology categories with details
   const technologyCategories = {
     "Web & App Frameworks": ["React", "Angular", "Next.js", "Node.js", "Flutter", "React Native"],
     "AI & Data": ["Python", "TensorFlow", "PyTorch", "Analytics Platforms"],
@@ -35,97 +29,51 @@ const Services = () => {
   };
 
   const toggleSection = (section) => {
-    if (expandedSection === section) {
-      setExpandedSection(null);
-    } else {
-      setExpandedSection(section);
-    }
+    setExpandedSection(expandedSection === section ? null : section);
   };
 
-  // Animation variants
+  // Animation Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 }
     }
   };
 
   const contentVariants = {
-    hidden: {
-      x: -100,
-      opacity: 0
-    },
+    hidden: { x: -100, opacity: 0 },
     visible: {
       x: 0,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.8, ease: "easeOut" }
     }
   };
 
   const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20
-    },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.6, ease: "easeOut" }
     }
   };
 
   const glowVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8
-    },
+    hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: {
-        duration: 1.2,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const serviceVariants = {
-    hidden: {
-      opacity: 0,
-      x: -20
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
+      transition: { duration: 1.2, ease: "easeOut" }
     }
   };
 
   const expandVariants = {
-    hidden: {
-      opacity: 0,
-      height: 0
-    },
+    hidden: { opacity: 0, height: 0 },
     visible: {
       opacity: 1,
       height: "auto",
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
@@ -151,54 +99,38 @@ const Services = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-
             {/* Left Section */}
             <motion.div
               className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 lg:ml-12"
               variants={contentVariants}
             >
-              {/* Technology Header - Clickable */}
+              {/* Technology Section */}
               <motion.div
                 className="cursor-pointer"
                 onClick={() => toggleSection('technology')}
                 variants={itemVariants}
               >
-                <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3 group">
                   <motion.div
-                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'technology'
-                      ? 'bg-red-500 text-white'
-                      : 'bg-blue-500 text-white'
-                      }`}
-                    whileHover={{ scale: 1.1 }}
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors
+                      ${expandedSection === 'technology' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}
+                    `}
+                    whileHover={{ scale: 1.1, rotate: expandedSection === 'technology' ? 180 : 90 }}
+                    animate={{ rotate: expandedSection === 'technology' ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {expandedSection === 'technology' ? (
-                      <motion.svg
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: 180 }}
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </motion.svg>
-                    ) : (
-                      <motion.svg
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: 0 }}
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </motion.svg>
-                    )}
+                    <motion.svg
+                      className="w-4 h-4 sm:w-5 sm:h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </motion.svg>
                   </motion.div>
                   <div className="flex flex-col">
                     <div className="flex items-baseline">
-                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
+                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight group-hover:underline">
                         Technology
                       </h2>
                       <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
@@ -213,7 +145,6 @@ const Services = () => {
                   </div>
                 </div>
 
-                {/* Technology Expandable Content */}
                 <AnimatePresence>
                   {expandedSection === 'technology' && (
                     <motion.div
@@ -248,49 +179,34 @@ const Services = () => {
                 </AnimatePresence>
               </motion.div>
 
-              {/* Services Section - Clickable */}
+              {/* Services Section */}
               <motion.div
                 className="cursor-pointer mt-6"
                 onClick={() => toggleSection('services')}
                 variants={itemVariants}
               >
-                <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3 group">
                   <motion.div
-                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${expandedSection === 'services'
-                      ? 'bg-red-500 text-white'
-                      : 'bg-blue-500 text-white'
-                      }`}
-                    whileHover={{ scale: 1.1 }}
+                    className={`w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors
+                      ${expandedSection === 'services' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}
+                    `}
+                    whileHover={{ scale: 1.1, rotate: expandedSection === 'services' ? 180 : 90 }}
+                    animate={{ rotate: expandedSection === 'services' ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {expandedSection === 'services' ? (
-                      <motion.svg
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: 180 }}
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </motion.svg>
-                    ) : (
-                      <motion.svg
-                        initial={{ rotate: 0 }}
-                        animate={{ rotate: 0 }}
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </motion.svg>
-                    )}
+                    <motion.svg
+                      className="w-4 h-4 sm:w-5 sm:h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </motion.svg>
                   </motion.div>
                   <div className="flex flex-col">
                     <div className="flex items-baseline">
-                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
-                       Services
+                      <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight group-hover:underline">
+                        Services
                       </h2>
                       <span className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 ml-1 sm:ml-2">
                         WE PROVIDE
@@ -304,11 +220,10 @@ const Services = () => {
                   </div>
                 </div>
 
-                {/* Services Expandable Content */}
                 <AnimatePresence>
                   {expandedSection === 'services' && (
                     <motion.div
-                      className="ml-4 sm:ml-12 mt-4 space-y-2 overflow-hidden"
+                      className="ml-4 sm:ml-12 mt-4 space-y-4 overflow-hidden"
                       variants={expandVariants}
                       initial="hidden"
                       animate="visible"
@@ -317,17 +232,16 @@ const Services = () => {
                       <p className="text-sm sm:text-base text-gray-600 mb-4">
                         From concept to deployment, we offer end-to-end solutions tailored to your business needs:
                       </p>
-                      {/* Services List */}
-                      <div ref={printRef}>
+                      <div ref={printRef} className="space-y-4">
                         {services.length > 0 ? (
-                          <ul className="list-disc pl-6 space-y-2">
-                            {services.map((service) => (
-                              <li key={service.id} className="text-sm sm:text-base md:text-lg">
+                          services.map((service) => (
+                            <div key={service.id}>
+                              <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800">
                                 {service.name}
-                                <p className="text-gray-600 text-sm">{service.description}</p>
-                              </li>
-                            ))}
-                          </ul>
+                              </h3>
+                              <p className="text-gray-600 text-sm">{service.description}</p>
+                            </div>
+                          ))
                         ) : (
                           <p className="text-gray-500">No services available.</p>
                         )}
@@ -338,17 +252,14 @@ const Services = () => {
               </motion.div>
             </motion.div>
 
-            {/* Right Section - SVG Graphic */}
+            {/* Right Section */}
             <motion.div
               className="flex justify-center lg:justify-end mt-6 lg:mt-0"
               variants={itemVariants}
             >
               <motion.div
                 className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
+                whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
               >
                 <img
                   src="Services shape.svg"

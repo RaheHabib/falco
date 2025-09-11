@@ -22,7 +22,7 @@ const HireUs = () => {
 
   useEffect(() => {
     // Initialize EmailJS with your public key
-    emailjs.init("M_CTarJqjrkNvsez5"); // Replace with your EmailJS public key
+    emailjs.init("c1AuQSNO4h6HbHjrT"); // Replace with your EmailJS public key
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -67,35 +67,35 @@ const HireUs = () => {
       subject: formData.subject,
       project_type: formData.projectType,
       message: formData.description,
-      to_email: 'talhaazfar4722@gmail.com'
+      to_email: 'admin@falcosolutions.co.uk'
     };
 
     // Send email using EmailJS
     emailjs.send(
-      'service_4swfz4p', // Replace with your EmailJS service ID
-      'template_r8o2osn', // Replace with your EmailJS template ID
+      'service_60aypz2', // Replace with your EmailJS service ID
+      'template_cbvat7g', // Replace with your EmailJS template ID
       templateParams
     )
-    .then((response) => {
-      console.log('SUCCESS!', response.status, response.text);
-      toast.success('Message sent successfully! We will get back to you soon.');
-      
-      // Reset form
-      setFormData({
-        fullName: '',
-        email: '',
-        subject: '',
-        projectType: '',
-        description: ''
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        toast.success('Message sent successfully! We will get back to you soon.');
+
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          subject: '',
+          projectType: '',
+          description: ''
+        });
+      })
+      .catch((error) => {
+        console.error('FAILED...', error);
+        toast.error('Failed to send message. Please try again later.');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-    })
-    .catch((error) => {
-      console.error('FAILED...', error);
-      toast.error('Failed to send message. Please try again later.');
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    });
   };
 
   const projectTypes = [
@@ -121,7 +121,7 @@ const HireUs = () => {
 
   return (
     <>
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -132,7 +132,7 @@ const HireUs = () => {
         draggable
         pauseOnHover
       />
-      
+
       <section id='contact' ref={sectionRef} className="relative ...">
         {/* Glow OUTSIDE the content container */}
         <div className="absolute bottom-0 right-0 w-60 h-60 lg:w-96 lg:h-96 rounded-full bg-gradient-to-tr from-blue-400/30 via-indigo-400/30 to-purple-500/30 blur-3xl pointer-events-none z-0"></div>
@@ -292,7 +292,8 @@ const HireUs = () => {
                           href="mailto:admin@falcosolutionsltd.co.uk"
                           className="text-blue-500 underline  text-base sm:text-lg hover:text-blue-600"
                         >
-                          admin@falcosolutionsltd.co.uk
+                          admin@falcosolutions.co.uk
+
                         </a>
                       </div>
 
@@ -309,8 +310,7 @@ const HireUs = () => {
                       <div className="flex items-start space-x-4">
                         <MapPin className="w-5 h-5 text-gray-600 mt-1" />
                         <div className="text-gray-700">
-                          <div>66630, Wood Street,</div>
-                          <div>Largo-88796, Turkey</div>
+                          <div>Birmingham, United Kingdom</div>
                         </div>
                       </div>
                     </div>

@@ -96,7 +96,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="mailto:admin@falcosolutionsltd.co.uk" className="text-gray-600 hover:text-black transition-colors duration-200 text-sm block break-all">
-                  admin@falcosolutionsltd.co.uk
+                  admin@falcosolutions.co.uk
                 </a>
               </li>
               <li>

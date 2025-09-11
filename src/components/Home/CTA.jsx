@@ -36,7 +36,7 @@ export default function GlowingCTASection() {
                 </h2>
                 
                 <p className="text-gray-300 text-lg">
-                  Janessa64@Macejkovic LLC
+                  admin@falcosolutions.co.uk.
                 </p>
                 
                 {/* Simple CTA Button */}

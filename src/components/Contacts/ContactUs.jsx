@@ -31,26 +31,26 @@ const ContactUs = () => {
     }
 
     emailjs.send(
-      'service_4swfz4p',
-      'template_qdfkjit',
+      'service_60aypz2',
+      'template_4uv9ykv',
       {
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
         message: formData.message,
-        to_email: 'talhaazfar4722@gmail.com'
+        to_email: 'admin@falcosolutions.co.uk'
       },
-      'M_CTarJqjrkNvsez5'
+      'c1AuQSNO4h6HbHjrT'
     )
-    .then((response) => {
-      toast.success('Message sent successfully! We will get back to you soon.');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    })
-    .catch((error) => {
-      toast.error('Failed to send message. Please try again later.');
-      console.error('EmailJS Error:', error);
-    })
-    .finally(() => setIsSubmitting(false));
+      .then((response) => {
+        toast.success('Message sent successfully! We will get back to you soon.');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      })
+      .catch((error) => {
+        toast.error('Failed to send message. Please try again later.');
+        console.error('EmailJS Error:', error);
+      })
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -111,7 +111,7 @@ const ContactUs = () => {
                   <div>
                     <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-1">Email Address</h3>
                     <a href="mailto:admin@falcosolutionsltd.co.uk" className="text-blue-500 underline text-base sm:text-lg">
-                      admin@falcosolutionsltd.co.uk
+                      admin@falcosolutions.co.uk
                     </a>
                   </div>
                 </div>

@@ -1,27 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import StreamingText from '@utils/StreamingText';
+import smart_logo from '../../assets/smart_logo.svg'
+import capital_logo from '../../assets/capital_logo.svg'
+import makhbu_logo from '../../assets/makhbu_logo.svg'
+import prime_logo from '../../assets/prime_logo.svg'
 
 // Client logos component
 const ClientLogos = () => {
   const logos = [
-    "logoipsum", "logoipsum", "logoipsum", "logoipsum", 
-    "logoipsum", "logoipsum", "logoipsum", "logoipsum"
+    smart_logo,
+    capital_logo,
+    makhbu_logo,
+    prime_logo,
+    smart_logo,
+    capital_logo,
+    makhbu_logo,
+    prime_logo
   ];
 
   return (
     <div className="absolute bottom-8 left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8">
       <div className="flex items-center justify-center space-x-6 sm:space-x-8 lg:space-x-12 overflow-hidden">
         {logos.map((logo, index) => (
-          <div key={index} className="flex items-center opacity-60 hover:opacity-100 transition-opacity">
-            <span className="text-xs sm:text-sm font-medium text-gray-600">
-              {logo}
-            </span>
+          <div
+            key={index}
+            className="flex items-center opacity-60 hover:opacity-100 transition-opacity"
+          >
+            <img
+              src={logo}
+              alt={`Client logo ${index + 1}`}
+              className="h-8 sm:h-10 lg:h-12 object-contain"
+            />
           </div>
         ))}
       </div>
     </div>
   );
 };
+
 
 // Main Hero component
 const Hero = () => {
