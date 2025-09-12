@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import smartscout from '../../assets/smartscout.webp';
-import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
-import image from '../../assets/image.png';
-import image2 from '../../assets/image2.png';
 import WorkWithUs from './WorkWithUs';
 import CountUp from 'react-countup';
 import { useLocation } from 'react-router-dom';
@@ -12,81 +8,6 @@ import HomeProjects from './HomeProjects';
 const Portfolio = () => {
   const statsRef = React.useRef(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-50px" });
-  const portfolioItems = [
-    {
-      id: 1,
-      title: "Smart Scout",
-      subtitle: "Mobile App",
-      type: "mobile",
-      description: "Smart Scout Mobile is a cross-platform Flutter application that empowers young athletes to build their sports portfolio on-the-go. Players can upload training videos, match highlights, and performance statistics directly from their mobile devices. The app provides seamless connectivity with the web platform, instant notifications for scout interest, and tools to track skill development over time. With its intuitive interface, athletes can maintain their sporting profile anytime, anywhere.",
-      image: smartscout
-    },
-    {
-      id: 2,
-      title: "Smart Scout",
-      subtitle: "Web Application",
-      type: "web",
-      description: "Smart Scout Web is a comprehensive talent showcase platform built with React.js that provides young athletes with a professional space to display their skills, achievements, and sports portfolios. The platform enables scouts and coaches to discover emerging talent through advanced filtering, video highlights, performance metrics, and detailed player profiles. Our full-stack solution features secure authentication, real-time messaging, and a robust admin dashboard for managing recruitment processes.",
-      image: smartscout_web2
-    },
-    {
-      id: 3,
-      title: "E-commerce",
-      subtitle: "Web Application",
-      type: "web",
-      description: "Makhbu is a modern e-commerce website designed to provide a seamless online shopping experience. The platform features a clean and intuitive interface where users can browse products, add items to their cart, and securely complete purchases. It includes essential functionalities such as product search and filtering, category-based browsing, user authentication, and responsive design for both desktop and mobile devices. Makhbu was built with a focus on performance, scalability, and user-friendly navigation, making it a complete solution for online retail.",
-      image: image
-    },
-    {
-      id: 4,
-      title: "E-commerce",
-      subtitle: "Mobile App",
-      type: "mobile",
-      description: "This project is a fully functional mobile application developed in Kotlin, designed with a focus on performance, reliability, and a smooth user experience. The app features a modern UI built with Jetpack Compose, providing intuitive navigation and responsiveness across devices. It integrates essential mobile functionalities such as authentication, API connectivity, and real-time data handling, making it scalable and adaptable for different use cases. The project demonstrates strong expertise in Android development, clean architecture, and Kotlin best practices.",
-      image: image2
-    }
-  ];
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  };
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  };
 
   const glowVariants = {
     animate: {
