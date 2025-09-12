@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import smartscout from '../../assets/smartscout.webp';
 import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
-import image from '../../assets/image.png';
-import image2 from '../../assets/image2.png';
+import power1 from '../../assets/power1.jpg';
+import power2 from '../../assets/power2.jpg';
+import power3 from '../../assets/power3.jpg';
+import power4 from '../../assets/power4.jpg';
+import vid from '../../assets/vid.mp4';
 
 const Portfolio = () => {
+  const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef(null);
+  
   const portfolioItems = [
     {
       id: 1,
@@ -25,21 +33,55 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      title: "E-commerce",
-      subtitle: "Web Application",
+      title: "GestureSurfer AI",
+      subtitle: "AI Hand Gesture Gaming",
       type: "web",
-      description: "Makhbu is a modern e-commerce website designed to provide a seamless online shopping experience. The platform features a clean and intuitive interface where users can browse products, add items to their cart, and securely complete purchases. It includes essential functionalities such as product search and filtering, category-based browsing, user authentication, and responsive design for both desktop and mobile devices. Makhbu was built with a focus on performance, scalability, and user-friendly navigation, making it a complete solution for online retail.",
-      image: image
+      description: "GestureSurfer AI is an innovative web application that uses computer vision and machine learning to transform hand movements into game controls. Players can navigate the subway surfer game environment using natural hand gestures, creating an immersive, controller-free gaming experience. Our solution leverages TensorFlow.js and pose detection algorithms to accurately track hand movements in real-time through standard webcams.",
+      video: vid,
+      fallbackImage: power1
     },
     {
       id: 4,
-      title: "E-commerce",
-      subtitle: "Mobile App",
+      title: "Power BI dashboard",
+      subtitle: "Power BI",
       type: "mobile",
-      description: "This project is a fully functional mobile application developed in Kotlin, designed with a focus on performance, reliability, and a smooth user experience. The app features a modern UI built with Jetpack Compose, providing intuitive navigation and responsiveness across devices. It integrates essential mobile functionalities such as authentication, API connectivity, and real-time data handling, making it scalable and adaptable for different use cases. The project demonstrates strong expertise in Android development, clean architecture, and Kotlin best practices.",
-      image: image2
+      description: "Designed a comprehensive Power BI dashboard analyzing Craster's 2022–2023 sales, customer, and product data across six datasets. Delivered an executive summary with key KPIs—total sales, YoY growth, regional performance, and profit margins. Conducted deep-dive analysis on product trends, customer behavior, and lead generation to support decision-making for sales, marketing, and product teams. Utilized DAX, Power Query, and data modeling to present clear, actionable insights through interactive visualizations.",
+      images: [power1, power2, power3, power4],
     }
   ];
+
+  // Handle video loading
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      
+      const handleCanPlay = () => {
+        setVideoLoaded(true);
+        // Try to play the video programmatically
+        video.play().catch(e => {
+          console.log("Autoplay prevented:", e);
+          // User interaction will be required to play the video
+        });
+      };
+      
+      const handleError = () => {
+        setVideoError(true);
+        console.error("Video failed to load");
+      };
+      
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('error', handleError);
+      
+      // Preload the video for better performance
+      video.preload = 'auto';
+      video.load();
+      
+      return () => {
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('error', handleError);
+      };
+    }
+  }, []);
 
   // Animation variants
   const containerVariants = {
@@ -91,6 +133,34 @@ const Portfolio = () => {
         repeat: Infinity,
         ease: "easeInOut"
       }
+    }
+  };
+
+  // Function to handle next image in carousel
+  const nextImage = (e, itemId) => {
+    e.stopPropagation();
+    const item = portfolioItems.find(i => i.id === itemId);
+    setActiveCarouselIndex((prevIndex) => 
+      (prevIndex + 1) % item.images.length
+    );
+  };
+
+  // Function to handle previous image in carousel
+  const prevImage = (e, itemId) => {
+    e.stopPropagation();
+    const item = portfolioItems.find(i => i.id === itemId);
+    setActiveCarouselIndex((prevIndex) => 
+      (prevIndex - 1 + item.images.length) % item.images.length
+    );
+  };
+
+  // Function to manually play video (for when autoplay is blocked)
+  const playVideo = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log("Play failed:", error);
+      });
     }
   };
 
@@ -219,49 +289,179 @@ const Portfolio = () => {
                 </motion.p>
               </motion.div>
 
-              {/* Project Image */}
-              <motion.div 
+              {/* Project Media */}
+              <div 
                 className={`
                   relative aspect-[4/3] rounded-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2
                   ${item.type === 'mobile' ? 'bg-black' : 'bg-gray-100'}
                 `}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
-                whileHover={{ 
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                  transition: { duration: 0.3 }
-                }}
               >
-                <img 
-                  src={item.image}
-                  alt={`${item.title} screenshot`}
-                  className="w-full h-full object-center"
-                />
-                
-                {/* Device frame based on type */}
-                {item.type === 'mobile' && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
-                  </div>
+                {/* Video for GestureSurfer AI */}
+                {item.id === 3 && (
+                  <>
+                    <div className="relative w-full h-full">
+                      {/* Loading spinner */}
+                      {!videoLoaded && !videoError && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                      
+                      {/* Video element */}
+                      <video 
+                        ref={videoRef}
+                        className="w-full h-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        poster={item.fallbackImage}
+                      >
+                        <source src={item.video} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                      
+                      {/* Play button overlay if video isn't playing */}
+                      {(!videoLoaded || videoError) && (
+                        <div 
+                          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
+                          onClick={playVideo}
+                        >
+                          {videoError ? (
+                            <div className="text-center text-white p-4">
+                              <p className="mb-2">Video failed to load</p>
+                              <button className="px-4 py-2 bg-orange-500 rounded hover:bg-orange-600 transition-colors">
+                                Try Again
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="w-16 h-16 bg-orange-500 bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-all">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Hover Overlay with Description */}
+                    <motion.div 
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.p 
+                        className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                      >
+                        "{item.description}"
+                      </motion.p>
+                    </motion.div>
+                  </>
                 )}
                 
-                {/* Hover Overlay with Description */}
-                <motion.div 
-                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.p 
-                    className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                  >
-                    "{item.description}"
-                  </motion.p>
-                </motion.div>
-              </motion.div>
+                {/* Carousel for Power BI dashboard */}
+                {item.id === 4 && (
+                  <>
+                    <div className="relative w-full h-full">
+                      {/* Main Image */}
+                      <img 
+                        src={item.images[activeCarouselIndex]}
+                        alt={`${item.title} screenshot ${activeCarouselIndex + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      
+                      {/* Device frame for mobile */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
+                      </div>
+                      
+                      {/* Navigation Arrows */}
+                      <button 
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full z-50 p-2 hover:bg-black/70 transition-colors"
+                        onClick={(e) => prevImage(e, item.id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      <button 
+                        className="absolute z-50 right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
+                        onClick={(e) => nextImage(e, item.id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {/* Dots Indicator */}
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                        {item.images.map((_, idx) => (
+                          <button
+                            key={idx}
+                            className={`w-2 h-2 rounded-full ${
+                              idx === activeCarouselIndex ? 'bg-white' : 'bg-white/50'
+                            }`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveCarouselIndex(idx);
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Hover Overlay with Description */}
+                    <motion.div 
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="text-center">
+                        <motion.p 
+                          className="text-white italic text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 mb-2"
+                        >
+                          "{item.description}"
+                        </motion.p>
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+                
+                {/* Regular Image for other items */}
+                {item.id !== 3 && item.id !== 4 && (
+                  <>
+                    <img 
+                      src={item.image}
+                      alt={`${item.title} screenshot`}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Device frame based on type */}
+                    {item.type === 'mobile' && (
+                      <div className="absolute inset-0 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
+                      </div>
+                    )}
+                    
+                    {/* Hover Overlay with Description */}
+                    <motion.div 
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.p 
+                        className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+                      >
+                        "{item.description}"
+                      </motion.p>
+                    </motion.div>
+                  </>
+                )}
+              </div>
             </motion.div>
           ))}
         </motion.div>

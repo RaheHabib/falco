@@ -7,6 +7,7 @@ import image2 from '../../assets/image2.png';
 import WorkWithUs from './WorkWithUs';
 import CountUp from 'react-countup';
 import { useLocation } from 'react-router-dom';
+import HomeProjects from './HomeProjects';
 
 const Portfolio = () => {
   const statsRef = React.useRef(null);
@@ -129,162 +130,10 @@ const Portfolio = () => {
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
-        <motion.div
-          className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={headerVariants}
-        >
-          <div className="lg:max-w-xl">
-            <motion.p
-              className="text-sm font-medium text-gray-700 uppercase tracking-wider mb-2"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              OUR WORK
-            </motion.p>
-            <motion.h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Portfo
-              <motion.span
-                className="inline-block bg-gray-700 text-white px-1 py-1 sm:px-2 sm:py-1 rounded-md transform -rotate-2"
-                initial={{ rotate: -2, scale: 0.8 }}
-                whileInView={{ rotate: -2, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
-                whileHover={{
-                  rotate: 2,
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-              >
-                lio
-              </motion.span>
-            </motion.h2>
-            <motion.p
-              className="text-sm sm:text-base italic lg:text-lg text-gray-600 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              "At Falco Solutions LTD, we turn ideas into powerful digital products. Our portfolio reflects a diverse range of projects — from mobile apps to AI-powered platforms, blockchain solutions, and scalable SaaS applications. Each project is built with innovation, performance, and growth in mind, helping businesses launch, scale, and thrive in the digital era."
-            </motion.p>
-          </div>
-        </motion.div>
+      
+     <HomeProjects/>
 
-        {/* Portfolio Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-        >
-          {portfolioItems.map((item, index) => (
-            <motion.div
-              key={item.id}
-              className={`group cursor-pointer ${index === 0 || index === 3 ? 'md:mt-0' : 'md:mt-16'
-                }`}
-              variants={itemVariants}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {/* Decorative Wave Icon */}
-              <motion.div
-                className="mb-4"
-                initial={{ opacity: 0, rotate: -45 }}
-                whileInView={{ opacity: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <img src="curl.svg" alt="Curl Icon" className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-              </motion.div>
-
-              {/* Project Title */}
-              <motion.div
-                className="mb-6"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-              >
-                <motion.h3
-                  className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors duration-200"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {item.title}
-                </motion.h3>
-                <motion.p
-                  className="text-lg sm:text-xl text-gray-600"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2, delay: 0.1 }}
-                >
-                  {item.subtitle}
-                </motion.p>
-              </motion.div>
-
-              {/* Project Image */}
-              <motion.div
-                className={`
-                  relative aspect-[4/3] rounded-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2
-                  ${item.type === 'mobile' ? 'bg-black' : 'bg-gray-100'}
-                `}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 + 0.4 }}
-                whileHover={{
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <img
-                  src={item.image}
-                  alt={`${item.title} screenshot`}
-                  className="w-full h-full object-center"
-                />
-
-                {/* Device frame based on type */}
-                {item.type === 'mobile' && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 h-5/6 border-8 border-black rounded-3xl" />
-                  </div>
-                )}
-
-                {/* Hover Overlay with Description */}
-                <motion.div
-                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 flex items-center justify-center p-6 transition-all duration-300"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.p
-                    className="text-white italic text-center text-sm sm:text-base opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                  >
-                    "{item.description}"
-                  </motion.p>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
        <div className="max-w-7xl mx-auto relative z-10">
-       
         {/* Stats Section */}
         <motion.div 
           ref={statsRef} 
