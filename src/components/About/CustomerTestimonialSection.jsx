@@ -138,30 +138,13 @@ const CustomerTestimonialSection = () => {
                 className="text-gray-600 text-lg lg:text-xl leading-relaxed max-w-xl"
                 variants={itemVariants}
               >
-                “Falco Solutions transformed our online store with a sleek design and smoother checkout process. 
-                Sales improved within weeks, and customer feedback has been amazing. We finally feel confident 
-                in scaling our business.”
+              “Falco Solutions completely transformed our online store. Before, the website looked outdated and checkout was slow, which frustrated customers. Their team redesigned everything with a modern, user-friendly interface and optimized the speed and payment flow. Within weeks, sales improved and repeat customers increased. What stood out was how responsive they were — they really listened, suggested ideas we hadn’t considered, and made managing the store much easier. Customer feedback has been overwhelmingly positive, and for the first time, we feel confident about scaling our business.”
               </motion.p>
             </div>
 
             {/* Avatars */}
             <motion.div className="space-y-6 lg:space-y-8" variants={containerVariants}>
-              <motion.div
-                className="flex items-center justify-center lg:justify-start space-x-4 lg:space-x-6"
-                variants={itemVariants}
-              >
-                {customerAvatars.map((avatar, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-4 border-white shadow-lg"
-                    variants={avatarVariants}
-                    whileHover={{ scale: 1.1, y: -5, transition: { duration: 0.2 } }}
-                    transition={{ delay: index * 0.1, duration: 0.4 }}
-                  >
-                    <img src={avatar} alt={`Customer ${index + 1}`} className="w-full h-full object-cover" />
-                  </motion.div>
-                ))}
-              </motion.div>
+             
 
               {/* Customer Info */}
               <motion.div className="text-center lg:text-left" variants={itemVariants}>
@@ -170,9 +153,9 @@ const CustomerTestimonialSection = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Sarthak Ranjan Hota
+                  Sara Ahmed
                 </motion.h3>
-                <p className="text-gray-600 text-lg">UI/UX Designer at Byecom</p>
+                <p className="text-gray-600 text-lg">E-commerce Manager / Marketing Lead</p>
               </motion.div>
             </motion.div>
           </motion.div>

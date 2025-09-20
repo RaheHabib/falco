@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import smartscout from '../../assets/smartscout.webp';
-import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
+// import smartscout_web2 from '../../assets/smartscout_web2.jpeg';
+import nigotis from '../../assets/nigotis.jpeg';
 import power1 from '../../assets/power1.jpg';
 import power2 from '../../assets/power2.jpg';
 import power3 from '../../assets/power3.jpg';
@@ -25,11 +26,11 @@ const ServiceProjects = () => {
     },
     {
       id: 2,
-      title: "Smart Scout",
+      title: "Nigotis.com",
       subtitle: "Web Application",
       type: "web",
-      description: "Smart Scout Web is a comprehensive talent showcase platform built with React.js that provides young athletes with a professional space to display their skills, achievements, and sports portfolios. The platform enables scouts and coaches to discover emerging talent through advanced filtering, video highlights, performance metrics, and detailed player profiles. Our full-stack solution features secure authentication, real-time messaging, and a robust admin dashboard for managing recruitment processes.",
-      image: smartscout_web2
+      description: "Nigotis.com is a web-based accounting and business automation platform designed for growing businesses. It helps companies manage their finances, track expenses, generate invoices, and automate day-to-day operations with ease. Built with a focus on simplicity and scalability, Nigotis empowers small and medium-sized businesses to take control of their financial processes and improve efficiency.",
+      image: nigotis
     },
     {
       id: 3,

@@ -49,63 +49,8 @@ const Portfolio = () => {
         animate="animate"
         style={{ animationDelay: '2s' }}
       />
-
       <div className="max-w-7xl mx-auto relative z-10">
-      
-     <HomeProjects/>
-
-       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Stats Section */}
-        <motion.div 
-          ref={statsRef} 
-          className="mt-16 sm:mt-20 md:mt-24 pt-12 sm:pt-16 border-t border-gray-200"
-          initial={{ opacity: 0, y: 50 }}
-          animate={statsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
-            {/* Delivered */}
-            <div className="text-center group">
-              <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-900 rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-900 rounded-full"></div>
-                </div>
-              </div>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                {statsInView ? <CountUp end={382} duration={2} /> : 0} <span className="text-xl sm:text-2xl">+</span>
-              </h3>
-              <p className="text-base sm:text-lg font-medium text-gray-900 mb-1">Projects Delivered</p>
-              <p className="text-sm sm:text-base text-gray-600">and counting more..</p>
-            </div>
-
-            {/* Active (Square) */}
-            <div className="text-center group">
-              <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-900 transform rotate-45 flex items-center justify-center">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-900"></div>
-                </div>
-              </div>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                {statsInView ? <CountUp end={14} duration={1.5} /> : 0} <span className="text-xl sm:text-2xl">+</span>
-              </h3>
-              <p className="text-base sm:text-lg font-medium text-gray-900 mb-1">Active Projects</p>
-              <p className="text-sm sm:text-base text-gray-600">and counting more..</p>
-            </div>
-
-            {/* Active (Triangle) */}
-            <div className="text-center group">
-              <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 border-l-[32px] sm:border-l-[52px] border-r-[32px] sm:border-r-[52px] border-b-[42px] sm:border-b-[68px] border-l-transparent border-r-transparent border-b-gray-900"></div>
-              </div>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                {statsInView ? <CountUp end={168} duration={2} /> : 0} <span className="text-xl sm:text-2xl">+</span>
-              </h3>
-              <p className="text-base sm:text-lg font-medium text-gray-900 mb-1">Active Projects</p>
-              <p className="text-sm sm:text-base text-gray-600">and counting more..</p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+        <HomeProjects />
       </div>
       <WorkWithUs />
 

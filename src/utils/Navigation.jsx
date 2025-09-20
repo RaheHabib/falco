@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { app } from "../firebase"; // make sure firebase is initialized
+import { app } from "../firebase";
+import DropDown from "./DropDown";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,7 @@ const Navigation = () => {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Services", href: "/services" }, // main services link
+    { label: "Services", href: "/services" },
     { label: "About Us", href: "/about" },
     { label: "Contact Us", href: "/contact" },
   ];
@@ -135,20 +136,13 @@ const Navigation = () => {
                     </svg>
                   </Link>
 
-                  {/* Dropdown */}
+                  {/* Dropdown - FULL SCREEN */}
                   {isDropdownOpen && (
-                    <div className="absolute bg-white shadow-lg rounded-md py-2 w-56 z-50">
-                      {services.map((service) => (
-                        <Link
-                          key={service.id}
-                          to="/contact"
-                          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          {service.name}
-                        </Link>
-                      ))}
+                    <div>
+                      <DropDown/>
                     </div>
                   )}
+
                 </div>
               ) : (
                 <Link

@@ -11,18 +11,18 @@ const TestimonialSection = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Lee Davis",
-      content: "Lorem ipsum dolor sit amet consectetur. In et arcu mauris ultricies pulvinar. Ut morbi amet ipsum lectus tristique sapien sed enim feugiat adipiscing non pulvinar a. Ultricies sem commodo a malesuada elementum morbi a in."
+      name: "Ali Raza",
+      content: "We were struggling with slow systems and constant downtime. Their team quickly identified the issues, set up a secure cloud solution, and our operations have been running smoothly ever since. It honestly saved us both time and money."
     },
     {
       id: 2,
-      name: "Daniel Corwin",
-      content: "Lorem ipsum dolor sit amet consectetur. Sed ut semper sodales id fringilla posuere egestas. Eget ultrices adipiscing augue urna."
+      name: "Sarah Khan",
+      content: "I approached them for a custom web application, and they delivered exactly what I had in mind—clean, fast, and scalable. The best part is their after-service support; they never leave you hanging."
     },
     {
       id: 3,
-      name: "Bonnie Upton",
-      content: "Lorem ipsum dolor sit amet consectetur. Sed quam sed duis commodo adipiscing ipsum et. Arcu urna sit lectus malesuada convallis integer et. Tempor velit euismod feugiat in proin habitant imperdiet vulputate."
+      name: "Daniel Malik",
+      content: "Their IT support team is always just a call away. Whether it’s server issues or security updates, they respond quickly and fix problems before they become bigger headaches. Very reliable."
     }
   ];
 
